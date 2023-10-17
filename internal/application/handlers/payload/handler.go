@@ -5,6 +5,20 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+type payloadRequest struct {
+	Inventories []string `json:"inventories"`
+}
+
+type payloadResponse struct {
+	Paylads []payload `json:"payloads"`
+}
+
+type payload struct {
+	InventoryID string `json:"inventory_id"`
+	Type        string `json:"type"`
+	Adm         string `json:"adm"`
+}
+
 type Handler struct {
 	logger interfaces.Logger
 	// possible data struct for healtchek response
