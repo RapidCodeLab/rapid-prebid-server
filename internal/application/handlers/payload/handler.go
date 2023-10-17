@@ -20,7 +20,10 @@ type payload struct {
 }
 
 type Handler struct {
-	logger interfaces.Logger
+	logger                  interfaces.Logger
+	deviceDetector          interfaces.DeviceDetector
+	geoDetector             interfaces.GeoDetector
+	InventoryEntityProvider interfaces.InventoryEntityProvider
 	// possible data struct for healtchek response
 }
 

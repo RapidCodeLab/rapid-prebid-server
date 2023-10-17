@@ -6,6 +6,6 @@ type DeviceData struct {
 	OS         int
 }
 
-type DeviceDetecor interface {
+type DeviceDetector interface {
 	Detect(user_agent string) (DeviceData, error)
 }
