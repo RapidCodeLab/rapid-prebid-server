@@ -9,5 +9,5 @@ type GeoData struct {
 }
 
 type GeoDetector interface {
-	Detect(ip net.IP) (GeoData, error)
+	Detect(net.IP) (GeoData, error)
 }

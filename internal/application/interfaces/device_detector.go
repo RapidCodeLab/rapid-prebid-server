@@ -1,11 +1,13 @@
 package interfaces
 
+import "github.com/prebid/openrtb/v17/adcom1"
+
 type DeviceData struct {
-	DeviceType int
-	Platform   int
-	OS         int
+	Browser    string
+	Platform   string
+	DeviceType adcom1.DeviceType
 }
 
 type DeviceDetector interface {
-	Detect(user_agent string) (DeviceData, error)
+	Detect(userAgent string) (DeviceData, error)
 }

@@ -5,6 +5,7 @@ go 1.21.0
 require (
 	github.com/RapidCodeLab/ZapLogger v0.0.1
 	github.com/caarlos0/env v3.5.0+incompatible
+	github.com/hamaxx/browscap_go v0.0.0-20221124083508-6c38c01cde45
 	github.com/prebid/openrtb/v17 v17.1.0
 	github.com/valyala/fasthttp v1.50.0
 	go.uber.org/mock v0.3.0
