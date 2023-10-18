@@ -16,28 +16,41 @@ const (
 	InventoryTypeApp
 )
 
-type InventoryEntity struct {
-	EntityID                     string
-	EntityType                   EntityType
-	InventoryID                  string // OpenRTB Site.id or App.id
-	InventoryType                int    // OpenRTB Site or App object
-	EntityCategories             []string
-	BlockedAdvertisierCategories []string
-	CategoriesTaxonomy           int
-	PlacementCount               int // for Native
-	Width                        int // will be use as wmin for Native
-	Height                       int // will be use as hmin for Native
+type Entity struct {
+	ID                              string     `json:"id"`
+	Type                            EntityType `json:"type"`
+	InventoryID                     string     `json:"inventory_id"`   // OpenRTB Site.id or App.id
+	InventoryType                   int        `json:"inventory_type"` // OpenRTB Site or App object
+	IABCategories                   []string   `json:"iab_categories"`
+	BlockedAdvertisierIABCategories []string   `json:"blocked_advertisier_iab_categories"`
+	IABCategoriesTaxonomy           int        `json:"iab_categories_taxonomy"`
+	PlacementCount                  int        `json:"placement_count"` // for Native
+	Width                           int        `json:"width"`           // will be use as wmin for Native
+	Height                          int        `json:"height"`          // will be use as hmin for Native
 }
 
-type Inventory struct{}
+type Inventory struct {
+	ID                              string   `json:"id"`
+	Name                            string   `json:"name"`
+	InventoryType                   int      `json:"inventory_type"` // OpenRTB Site or App object
+	IABCategories                   []string `json:"iab_categories"`
+	BlockedAdvertisierIABCategories []string `json:"blocked_advertisier_iab_categories"`
+	IABCategoriesTaxonomy           int      `json:"iab_categories_taxonomy"`
+}
 
 type InventoryAPI interface {
 	EntityAPI
+	ReadAllInventories() ([]Inventory, error)
+	CreateInventory(Inventory) error
+	ReadInventory(ID string) (Inventory, error)
+	UpdateInventory(Inventory) error
+	DeleteInventory(Inventory) error
 }
 
 type EntityAPI interface {
-	Create(InventoryEntity) error
-	Read(EntityID string) (InventoryEntity, error)
-	Update(InventoryEntity) error
-	Delete(InventoryEntity) error
+	ReadAllEntities() ([]Entity, error)
+	CreateEntity(Entity) error
+	ReadEntity(ID string) (Entity, error)
+	UpdateEntity(Entity) error
+	DeleteEntity(Entity) error
 }
