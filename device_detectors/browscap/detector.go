@@ -1,4 +1,4 @@
-package defaultdevicedetector
+package browscap_devicedetector
 
 import (
 	"errors"
@@ -19,14 +19,15 @@ type DeviceDetector struct {
 }
 
 func New(path string) (*DeviceDetector, error) {
+	d := &DeviceDetector{}
+
 	r, err := bgo.NewBrowsCapFromFile(path)
 	if err != nil {
-		return err
+		return d, err
 	}
 
-	return &DeviceDetector{
-		reader: r,
-	}, nil
+	d.reader = r
+	return d, nil
 }
 
 func (d *DeviceDetector) Detect(
