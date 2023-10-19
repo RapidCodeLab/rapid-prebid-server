@@ -44,7 +44,7 @@ type InventoryAPI interface {
 	CreateInventory(Inventory) error
 	ReadInventory(ID string) (Inventory, error)
 	UpdateInventory(Inventory) error
-	DeleteInventory(Inventory) error
+	DeleteInventory(ID string) error
 }
 
 type EntityAPI interface {
@@ -52,5 +52,5 @@ type EntityAPI interface {
 	CreateEntity(Entity) error
 	ReadEntity(ID string) (Entity, error)
 	UpdateEntity(Entity) error
-	DeleteEntity(Entity) error
+	DeleteEntity(ID string) error
 }

@@ -7,29 +7,8 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-const (
-	contentTypeApplicationJson = "application/json"
-	idUserValue                = "id"
-)
-
-type Handler struct {
-	logger       interfaces.Logger
-	inventoryApi interfaces.InventoryAPI
-	// possible data struct for healtchek response
-}
-
-func New(
-	l interfaces.Logger,
-	api interfaces.InventoryAPI,
-) *Handler {
-	return &Handler{
-		logger:       l,
-		inventoryApi: api,
-	}
-}
-
-func (h *Handler) HandleReadAllEntities(ctx *fasthttp.RequestCtx) {
-	data, err := h.inventoryApi.ReadAllEntities()
+func (h *Handler) HandleReadAllInventories(ctx *fasthttp.RequestCtx) {
+	data, err := h.inventoryApi.ReadAllInventories()
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -50,25 +29,25 @@ func (h *Handler) HandleReadAllEntities(ctx *fasthttp.RequestCtx) {
 	ctx.SetBody(res)
 }
 
-func (h *Handler) HandleCreateEntity(ctx *fasthttp.RequestCtx) {
-	entity := interfaces.Entity{}
+func (h *Handler) HandleCreateInventory(ctx *fasthttp.RequestCtx) {
+	inv := interfaces.Inventory{}
 
-	err := json.Unmarshal(ctx.PostBody(), &entity)
+	err := json.Unmarshal(ctx.PostBody(), &inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
 		return
 	}
 
-	err = h.inventoryApi.CreateEntity(entity)
+	err = h.inventoryApi.CreateInventory(inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
 	}
 }
 
-func (h *Handler) HandleReadEntity(ctx *fasthttp.RequestCtx) {
+func (h *Handler) HandleReadInventory(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	data, err := h.inventoryApi.ReadEntity(ID)
+	data, err := h.inventoryApi.ReadInventory(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -84,25 +63,25 @@ func (h *Handler) HandleReadEntity(ctx *fasthttp.RequestCtx) {
 	ctx.SetBody(res)
 }
 
-func (h *Handler) HandleUpdateEntity(ctx *fasthttp.RequestCtx) {
-	entity := interfaces.Entity{}
+func (h *Handler) HandleUpdateInventory(ctx *fasthttp.RequestCtx) {
+	inv := interfaces.Inventory{}
 
-	err := json.Unmarshal(ctx.PostBody(), &entity)
+	err := json.Unmarshal(ctx.PostBody(), &inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
 		return
 	}
 
-	err = h.inventoryApi.UpdateEntity(entity)
+	err = h.inventoryApi.UpdateInventory(inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
 	}
 }
 
-func (h *Handler) HandleDeleteEntity(ctx *fasthttp.RequestCtx) {
+func (h *Handler) HandleDeleteInventory(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	err := h.inventoryApi.DeleteEntity(ID)
+	err := h.inventoryApi.DeleteInventory(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return

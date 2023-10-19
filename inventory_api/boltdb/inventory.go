@@ -65,9 +65,9 @@ func (i *Service) UpdateInventory(inv interfaces.Inventory) error {
 	})
 }
 
-func (i *Service) DeleteInventory(inv interfaces.Inventory) error {
+func (i *Service) DeleteInventory(ID string) error {
 	return i.db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(inventoryBucketName))
-		return b.Delete([]byte(inv.ID))
+		return b.Delete([]byte(ID))
 	})
 }

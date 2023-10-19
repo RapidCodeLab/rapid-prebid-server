@@ -65,9 +65,9 @@ func (i *Service) UpdateEntity(entity interfaces.Entity) error {
 	})
 }
 
-func (i *Service) DeleteEntity(entity interfaces.Entity) error {
+func (i *Service) DeleteEntity(ID string) error {
 	return i.db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(entityBucketName))
-		return b.Delete([]byte(entity.ID))
+		return b.Delete([]byte(ID))
 	})
 }
