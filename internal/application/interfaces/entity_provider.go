@@ -1,5 +1,5 @@
 package interfaces
 
 type InventoryEntityProvider interface {
-	ProvideEntity(entityID string) (InventoryEntity, error)
+	ProvideEntity(entityID string) (Entity, error)
 }
