@@ -5,3 +5,5 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/RapidCodeLab/rapid-prebid-server?style=flat-square)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/RapidCodeLab/rapid-prebid-server?style=flat-square)
 ![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/RapidCodeLab/rapid-prebid-server/main?style=flat-square)
+
+
