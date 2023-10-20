@@ -46,10 +46,7 @@ func New(
 func (i *Service) initBuckets() error {
 	err := i.db.Update(func(tx *bolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists([]byte(inventoryBucketName))
-		if err != nil {
-			return err
-		}
-		return nil
+		return err
 	})
 	if err != nil {
 		return err
@@ -57,9 +54,6 @@ func (i *Service) initBuckets() error {
 
 	return i.db.Update(func(tx *bolt.Tx) error {
 		_, err = tx.CreateBucketIfNotExists([]byte(entityBucketName))
-		if err != nil {
-			return err
-		}
-		return nil
+		return err
 	})
 }
