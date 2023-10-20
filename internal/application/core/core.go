@@ -7,22 +7,25 @@ import (
 )
 
 type payloadHTTPServer interface {
-	Start(context.Context) error
+	Start(context.Context, interfaces.InventoryAPI) error
 }
 
 type Core struct {
 	payloadHTTPServer payloadHTTPServer
-	logger interfaces.Logger
+	logger            interfaces.Logger
 }
 
 func New(s payloadHTTPServer,
-l interfaces.Logger) *Core {
+	l interfaces.Logger,
+) *Core {
 	return &Core{
 		payloadHTTPServer: s,
-		logger: l,
+		logger:            l,
 	}
 }
 
-func (i *Core) Start(ctx context.Context) error {
-	return i.payloadHTTPServer.Start(ctx)
+func (i *Core) Start(ctx context.Context,
+	invAPI interfaces.InventoryAPI,
+) error {
+	return i.payloadHTTPServer.Start(ctx, invAPI)
 }

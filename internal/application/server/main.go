@@ -3,7 +3,9 @@ package server
 import (
 	"context"
 
+	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory_api"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
+	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/reuseport"
 )
@@ -26,13 +28,22 @@ func New(l interfaces.Logger,
 	}
 }
 
-func (i *Server) Start(ctx context.Context) error {
+func (i *Server) Start(ctx context.Context,
+	invAPI interfaces.InventoryAPI,
+) error {
 	ln, err := reuseport.Listen(
 		i.listenNetwork,
 		i.listenAddr)
 	if err != nil {
 		return err
 	}
+
+	r := fasthttprouter.New()
+
+	invAPIHandler := inventoryapi_handler.New(i.logger, invAPI)
+	invAPIHandler.LoadRoutes(r)
+
+	i.httpServer.Handler = r.Handler
 
 	go func() {
 		<-ctx.Done()

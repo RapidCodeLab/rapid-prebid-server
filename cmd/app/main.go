@@ -12,6 +12,7 @@ import (
 	zaplogger "github.com/RapidCodeLab/ZapLogger"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/server"
+	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory_api/boltdb"
 )
 
 type Config struct {
@@ -47,9 +48,10 @@ func main() {
 		config.ServerListeNetwork,
 		config.ServerListenAddr)
 
+	invAPI, err := inventoryapiboltdb.New(ctx, "", l)
 	app := core.New(s, l)
 
-	err = app.Start(ctx)
+	err = app.Start(ctx, invAPI)
 	if err != nil {
 		os.Exit(1)
 	}
