@@ -1,0 +1,12 @@
+version: "3"
+
+tasks:
+  ping:
+    cmds:
+      - echo "Pong!"
+  test:
+    cmds:
+      - go test -cover ./...
+  lint:
+    cmds:
+      - golangci-lint run ./...
