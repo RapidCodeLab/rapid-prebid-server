@@ -30,7 +30,7 @@ type Entity struct {
 }
 
 type Inventory struct {
-	ID                              string   `json:"id"`
+	ID                              string   `json:"id,required"`
 	Name                            string   `json:"name"`
 	InventoryType                   int      `json:"inventory_type"` // OpenRTB Site or App object
 	IABCategories                   []string `json:"iab_categories"`

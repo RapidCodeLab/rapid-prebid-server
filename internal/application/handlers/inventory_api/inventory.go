@@ -46,6 +46,7 @@ func (h *Handler) HandleCreateInventory(ctx *fasthttp.RequestCtx) {
 
 func (h *Handler) HandleReadInventory(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
+
 	data, err := h.inventoryApi.ReadInventory(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
