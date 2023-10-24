@@ -26,12 +26,13 @@ func main() {
 	config := &Config{}
 	err := env.Parse(config)
 	if err != nil {
-		fmt.Printf("config parse error: %s", err.Error())
+		fmt.Printf("config parse error: %s\n", err.Error())
 		os.Exit(1)
 	}
 
 	l, err := zaplogger.New(&zaplogger.Config{})
 	if err != nil {
+		fmt.Printf("logger init: %s\n", err.Error())
 		os.Exit(1)
 	}
 
