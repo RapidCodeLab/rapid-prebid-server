@@ -38,8 +38,8 @@ type Inventory struct {
 	IABCategoriesTaxonomy           int      `json:"iab_categories_taxonomy"`
 }
 
-type InventoryAPI interface {
-	EntityAPI
+type InventoryStorager interface {
+	EntityStorager
 	ReadAllInventories() ([]Inventory, error)
 	CreateInventory(Inventory) error
 	ReadInventory(ID string) (Inventory, error)
@@ -47,7 +47,7 @@ type InventoryAPI interface {
 	DeleteInventory(ID string) error
 }
 
-type EntityAPI interface {
+type EntityStorager interface {
 	ReadAllEntities() ([]Entity, error)
 	CreateEntity(Entity) error
 	ReadEntity(ID string) (Entity, error)

@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) HandleReadAllEntities(ctx *fasthttp.RequestCtx) {
-	data, err := h.inventoryApi.ReadAllEntities()
+	data, err := h.invStorager.ReadAllEntities()
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -38,7 +38,7 @@ func (h *Handler) HandleCreateEntity(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	err = h.inventoryApi.CreateEntity(entity)
+	err = h.invStorager.CreateEntity(entity)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -47,7 +47,7 @@ func (h *Handler) HandleCreateEntity(ctx *fasthttp.RequestCtx) {
 
 func (h *Handler) HandleReadEntity(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	data, err := h.inventoryApi.ReadEntity(ID)
+	data, err := h.invStorager.ReadEntity(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -72,7 +72,7 @@ func (h *Handler) HandleUpdateEntity(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	err = h.inventoryApi.UpdateEntity(entity)
+	err = h.invStorager.UpdateEntity(entity)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -81,10 +81,9 @@ func (h *Handler) HandleUpdateEntity(ctx *fasthttp.RequestCtx) {
 
 func (h *Handler) HandleDeleteEntity(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	err := h.inventoryApi.DeleteEntity(ID)
+	err := h.invStorager.DeleteEntity(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
 	}
 }
-

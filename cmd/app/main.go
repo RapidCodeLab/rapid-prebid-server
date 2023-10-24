@@ -49,7 +49,7 @@ func main() {
 		config.ServerListeNetwork,
 		config.ServerListenAddr)
 
-	invAPI, err := inventoryapiboltdb.New(
+	invStorager, err := inventoryapiboltdb.New(
 		ctx,
 		config.BoltDBPath,
 		l)
@@ -60,7 +60,7 @@ func main() {
 
 	app := core.New(s, l)
 
-	err = app.Start(ctx, invAPI)
+	err = app.Start(ctx, invStorager)
 	if err != nil {
 		l.Errorf("app exit", "err", err.Error())
 		os.Exit(1)

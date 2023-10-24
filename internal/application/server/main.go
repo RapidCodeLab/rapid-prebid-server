@@ -29,7 +29,7 @@ func New(l interfaces.Logger,
 }
 
 func (i *Server) Start(ctx context.Context,
-	invAPI interfaces.InventoryAPI,
+	invStorager interfaces.InventoryStorager,
 ) error {
 	ln, err := reuseport.Listen(
 		i.listenNetwork,
@@ -40,7 +40,10 @@ func (i *Server) Start(ctx context.Context,
 
 	r := fasthttprouter.New()
 
-	invAPIHandler := inventoryapi_handler.New(i.logger, invAPI)
+	invAPIHandler := inventoryapi_handler.New(
+		i.logger,
+		invStorager,
+	)
 	invAPIHandler.LoadRoutes(r)
 
 	i.httpServer.Handler = r.Handler

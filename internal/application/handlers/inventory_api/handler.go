@@ -10,18 +10,17 @@ const (
 )
 
 type Handler struct {
-	logger       interfaces.Logger
-	inventoryApi interfaces.InventoryAPI
+	logger      interfaces.Logger
+	invStorager interfaces.InventoryStorager
 	// possible data struct for healtchek response
 }
 
 func New(
 	l interfaces.Logger,
-	api interfaces.InventoryAPI,
+	s interfaces.InventoryStorager,
 ) *Handler {
 	return &Handler{
-		logger:       l,
-		inventoryApi: api,
+		logger:      l,
+		invStorager: s,
 	}
 }
-
