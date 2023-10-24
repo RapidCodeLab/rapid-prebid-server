@@ -10,3 +10,9 @@ tasks:
   lint:
     cmds:
       - golangci-lint run ./...
+  run: 
+    dotenv: ['.env']
+    cmds:
+      - go build -o .bin/app cmd/app/main.go 
+      - chmod +x .bin/app
+      - ./.bin/app 

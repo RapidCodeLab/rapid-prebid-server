@@ -19,6 +19,7 @@ type Config struct {
 	Debug              bool   `env:"DEBUG"`
 	ServerListeNetwork string `env:"SERVER_LISTEN_NETWORK,required"`
 	ServerListenAddr   string `env:"SERVER_LISTEN_ADDR,required"`
+	BoltDBPath         string `env:"BOLTDB_PATH,required"`
 }
 
 func main() {
@@ -48,11 +49,21 @@ func main() {
 		config.ServerListeNetwork,
 		config.ServerListenAddr)
 
-	invAPI, err := inventoryapiboltdb.New(ctx, "", l)
+	invAPI, err := inventoryapiboltdb.New(
+		ctx,
+		config.BoltDBPath,
+		l)
+	if err != nil {
+		l.Errorf("boltDB open", "err", err.Error())
+		os.Exit(1)
+	}
+
 	app := core.New(s, l)
 
 	err = app.Start(ctx, invAPI)
 	if err != nil {
+		l.Errorf("app exit", "err", err.Error())
 		os.Exit(1)
 	}
+	l.Infof("succefull app exit")
 }
