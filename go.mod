@@ -3,7 +3,7 @@ module github.com/RapidCodeLab/rapid-prebid-server
 go 1.21.0
 
 require (
-	github.com/RapidCodeLab/ZapLogger v0.0.3
+	github.com/RapidCodeLab/ZapLogger v0.0.5
 	github.com/boltdb/bolt v1.3.1
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/caarlos0/env v3.5.0+incompatible

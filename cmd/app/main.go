@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/caarlos0/env"
 
@@ -30,11 +31,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	l, err := zaplogger.New(&zaplogger.Config{})
+	l, err := zaplogger.New(&zaplogger.Config{
+		ServiceID:           "prebid",
+		StdOutLoggerEnabled: true,
+	})
 	if err != nil {
 		fmt.Printf("logger init: %s\n", err.Error())
 		os.Exit(1)
 	}
+
+	l.Infof("application started. %s", time.Now().Format("2006-01-02 15:04:05"))
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
