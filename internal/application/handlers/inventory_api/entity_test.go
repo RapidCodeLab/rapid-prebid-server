@@ -1,5 +1,7 @@
 package inventoryapi_handler_test
 
+
+
 import (
 	"errors"
 	"testing"
@@ -12,9 +14,9 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-var validInventoryPyload = "{\"id\":\"someid\", \"name\":\"\", \"inventory_type\": 0, \"iab_categories\":[], \"blocked_advertiser_iab_categories\":[], \"iab_categories_taxonomy\":0}"
+var validEntityPyload = "{\"id\":\"someid\", \"name\":\"\", \"inventory_type\": 0, \"iab_categories\":[], \"blocked_advertiser_iab_categories\":[], \"iab_categories_taxonomy\":0}"
 
-func TestHandleReadAllInventorires(t *testing.T) {
+func TestHandleReadAllEntities(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -25,7 +27,7 @@ func TestHandleReadAllInventorires(t *testing.T) {
 	testCases := []struct {
 		name           string
 		expectHTTPCode int
-		apiReturnData  []interfaces.Inventory
+		apiReturnData  []interfaces.Entity
 		apiReturnErr   error
 	}{
 		{
@@ -37,13 +39,13 @@ func TestHandleReadAllInventorires(t *testing.T) {
 		{
 			name:           "no content",
 			expectHTTPCode: fasthttp.StatusNoContent,
-			apiReturnData:  []interfaces.Inventory{},
+			apiReturnData:  []interfaces.Entity{},
 			apiReturnErr:   nil,
 		},
 		{
 			name:           "ok",
 			expectHTTPCode: fasthttp.StatusOK,
-			apiReturnData: []interfaces.Inventory{
+			apiReturnData: []interfaces.Entity{
 				{},
 			},
 			apiReturnErr: nil,
@@ -53,13 +55,13 @@ func TestHandleReadAllInventorires(t *testing.T) {
 	for _, tc := range testCases {
 
 		invAPIStorage.EXPECT().
-			ReadAllInventories().
+			ReadAllEntities().
 			Return(tc.apiReturnData,
 				tc.apiReturnErr)
 
 		reqCtx := &fasthttp.RequestCtx{}
 
-		handler.HandleReadAllInventories(reqCtx)
+		handler.HandleReadAllEntities(reqCtx)
 
 		if reqCtx.Response.StatusCode() !=
 			tc.expectHTTPCode {
@@ -68,7 +70,7 @@ func TestHandleReadAllInventorires(t *testing.T) {
 	}
 }
 
-func TestHandleCreateInventory(t *testing.T) {
+func TestHandleCreateEntity(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -82,7 +84,7 @@ func TestHandleCreateInventory(t *testing.T) {
 	}{
 		{
 			name:           "bad gateway",
-			payload:        []byte(validInventoryPyload),
+			payload:        []byte(validEntityPyload),
 			expectHTTPCode: fasthttp.StatusBadGateway,
 			apiReturnErr:   errors.New("some error"),
 		},
@@ -94,7 +96,7 @@ func TestHandleCreateInventory(t *testing.T) {
 		},
 		{
 			name:           "ok",
-			payload:        []byte(validInventoryPyload),
+			payload:        []byte(validEntityPyload),
 			expectHTTPCode: fasthttp.StatusOK,
 			apiReturnErr:   nil,
 		},
@@ -106,14 +108,14 @@ func TestHandleCreateInventory(t *testing.T) {
 		handler := inventoryapi_handler.New(l, invAPIStorage)
 
 		invAPIStorage.EXPECT().
-			CreateInventory(gomock.Not(nil)).
+			CreateEntity(gomock.Not(nil)).
 			AnyTimes().
 			Return(tc.apiReturnErr)
 
 		reqCtx := &fasthttp.RequestCtx{}
 		reqCtx.Request.SetBody(tc.payload)
 
-		handler.HandleCreateInventory(reqCtx)
+		handler.HandleCreateEntity(reqCtx)
 
 		if reqCtx.Response.StatusCode() !=
 			tc.expectHTTPCode {
@@ -122,7 +124,7 @@ func TestHandleCreateInventory(t *testing.T) {
 	}
 }
 
-func TestHandleReadInventory(t *testing.T) {
+func TestHandleReadEntity(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -137,13 +139,13 @@ func TestHandleReadInventory(t *testing.T) {
 		{
 			name:           "bad gateway",
 			expectHTTPCode: fasthttp.StatusBadGateway,
-			apiReturnData:  interfaces.Inventory{},
+			apiReturnData:  interfaces.Entity{},
 			apiReturnErr:   errors.New("some error"),
 		},
 		{
 			name:           "ok",
 			expectHTTPCode: fasthttp.StatusOK,
-			apiReturnData:  interfaces.Inventory{},
+			apiReturnData:  interfaces.Entity{},
 			apiReturnErr:   nil,
 		},
 	}
@@ -154,14 +156,14 @@ func TestHandleReadInventory(t *testing.T) {
 		handler := inventoryapi_handler.New(l, invAPIStorage)
 
 		invAPIStorage.EXPECT().
-			ReadInventory(gomock.Not(nil)).
+			ReadEntity(gomock.Not(nil)).
 			AnyTimes().
 			Return(tc.apiReturnData, tc.apiReturnErr)
 
 		reqCtx := &fasthttp.RequestCtx{}
 		reqCtx.SetUserValue("id", "someid")
 
-		handler.HandleReadInventory(reqCtx)
+		handler.HandleReadEntity(reqCtx)
 
 		if reqCtx.Response.StatusCode() !=
 			tc.expectHTTPCode {
@@ -170,7 +172,7 @@ func TestHandleReadInventory(t *testing.T) {
 	}
 }
 
-func TestHandleUpdateInventory(t *testing.T) {
+func TestHandleUpdateEntity(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -184,7 +186,7 @@ func TestHandleUpdateInventory(t *testing.T) {
 	}{
 		{
 			name:           "bad gateway",
-			payload:        []byte(validInventoryPyload),
+			payload:        []byte(validEntityPyload),
 			expectHTTPCode: fasthttp.StatusBadGateway,
 			apiReturnErr:   errors.New("some error"),
 		},
@@ -196,7 +198,7 @@ func TestHandleUpdateInventory(t *testing.T) {
 		},
 		{
 			name:           "ok",
-			payload:        []byte(validInventoryPyload),
+			payload:        []byte(validEntityPyload),
 			expectHTTPCode: fasthttp.StatusOK,
 			apiReturnErr:   nil,
 		},
@@ -208,14 +210,14 @@ func TestHandleUpdateInventory(t *testing.T) {
 		handler := inventoryapi_handler.New(l, invAPIStorage)
 
 		invAPIStorage.EXPECT().
-			UpdateInventory(gomock.Not(nil)).
+			UpdateEntity(gomock.Not(nil)).
 			AnyTimes().
 			Return(tc.apiReturnErr)
 
 		reqCtx := &fasthttp.RequestCtx{}
 		reqCtx.Request.SetBody(tc.payload)
 
-		handler.HandleUpdateInventory(reqCtx)
+		handler.HandleUpdateEntity(reqCtx)
 
 		if reqCtx.Response.StatusCode() !=
 			tc.expectHTTPCode {
@@ -224,7 +226,7 @@ func TestHandleUpdateInventory(t *testing.T) {
 	}
 }
 
-func TestHandleDeleteInventory(t *testing.T) {
+func TestHandleDeleteEntity(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -253,14 +255,14 @@ func TestHandleDeleteInventory(t *testing.T) {
 		handler := inventoryapi_handler.New(l, invAPIStorage)
 
 		invAPIStorage.EXPECT().
-			DeleteInventory(gomock.Not(nil)).
+			DeleteEntity(gomock.Not(nil)).
 			AnyTimes().
 			Return(tc.apiReturnErr)
 
 		reqCtx := &fasthttp.RequestCtx{}
 		reqCtx.SetUserValue("id", "someid")
 
-		handler.HandleDeleteInventory(reqCtx)
+		handler.HandleDeleteEntity(reqCtx)
 
 		if reqCtx.Response.StatusCode() !=
 			tc.expectHTTPCode {
