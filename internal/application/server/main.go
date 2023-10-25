@@ -21,8 +21,10 @@ func New(l interfaces.Logger,
 	network, addr string,
 ) *Server {
 	return &Server{
-		logger:        l,
-		httpServer:    &fasthttp.Server{},
+		logger: l,
+		httpServer: &fasthttp.Server{
+			Name: "Rapid Prebid Server",
+		},
 		listenNetwork: network,
 		listenAddr:    addr,
 	}

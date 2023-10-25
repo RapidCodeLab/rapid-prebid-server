@@ -34,7 +34,7 @@ type Inventory struct {
 	Name                            string   `json:"name"`
 	InventoryType                   int      `json:"inventory_type"` // OpenRTB Site or App object
 	IABCategories                   []string `json:"iab_categories"`
-	BlockedAdvertisierIABCategories []string `json:"blocked_advertisier_iab_categories"`
+	BlockedAdvertisierIABCategories []string `json:"blocked_advertiser_iab_categories"`
 	IABCategoriesTaxonomy           int      `json:"iab_categories_taxonomy"`
 }
 
