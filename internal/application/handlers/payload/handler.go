@@ -2,11 +2,10 @@ package payload_handler
 
 import (
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
-	"github.com/valyala/fasthttp"
 )
 
 type payloadRequest struct {
-	Inventories []string `json:"inventories"`
+	Entities []string `json:"entities"`
 }
 
 type payloadResponse struct {
@@ -20,18 +19,23 @@ type payload struct {
 }
 
 type Handler struct {
-	logger                  interfaces.Logger
-	deviceDetector          interfaces.DeviceDetector
-	geoDetector             interfaces.GeoDetector
-	InventoryEntityProvider interfaces.InventoryEntityProvider
+	logger         interfaces.Logger
+	deviceDetector interfaces.DeviceDetector
+	geoDetector    interfaces.GeoDetector
+	entityProvider interfaces.EntityProvider
 	// possible data struct for healtchek response
 }
 
-func New(l interfaces.Logger) *Handler {
+func New(
+	l interfaces.Logger,
+	dd interfaces.DeviceDetector,
+	gd interfaces.GeoDetector,
+	p interfaces.EntityProvider,
+) *Handler {
 	return &Handler{
-		logger: l,
+		logger:         l,
+		deviceDetector: dd,
+		geoDetector:    gd,
+		entityProvider: p,
 	}
-}
-
-func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 }

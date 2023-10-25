@@ -72,5 +72,6 @@ func main() {
 		l.Errorf("app exit", "err", err.Error())
 		os.Exit(1)
 	}
+
 	l.Infof("application successfully stopped. %s", time.Now().Format("2006-01-02 15:04:05"))
 }
