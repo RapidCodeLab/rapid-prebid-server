@@ -1,8 +1,10 @@
 package payload_handler
 
 import (
+	"context"
 	"encoding/json"
 	"net"
+	"sync"
 
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/prebid/openrtb/v17/openrtb2"
@@ -70,7 +72,25 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		bidRequest.Imp = append(bidRequest.Imp, imp)
 	}
 
-	//request DSPs
+	responses := make([]openrtb2.BidResponse, 0, len(h.dspAdapters))
+
+	// request DSPs
+	wg := sync.WaitGroup{}
+	wg.Add(len(h.dspAdapters))
+
+	for _, adapter := range h.dspAdapters {
+		a := adapter
+		go func() {
+			defer wg.Done()
+			bidResponse, err := a.DoRequest(context.TODO(), bidRequest)
+			if err != nil {
+				h.logger.Errorf("adapter request: %s", err.Error())
+			}
+			responses = append(responses, bidResponse)
+		}()
+	}
+
+	wg.Done()
 
 	res := payloadResponse{}
 	data, err := json.Marshal(res)

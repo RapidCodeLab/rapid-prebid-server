@@ -27,6 +27,7 @@ type Handler struct {
 	deviceDetector interfaces.DeviceDetector
 	geoDetector    interfaces.GeoDetector
 	entityProvider interfaces.EntityProvider
+	dspAdapters    []interfaces.DSPAdapter
 	// possible data struct for healtchek response
 }
 
