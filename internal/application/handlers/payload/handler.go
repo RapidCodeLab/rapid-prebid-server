@@ -4,6 +4,10 @@ import (
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 )
 
+const (
+	contentTypeApplicationJson = "application/json"
+)
+
 type payloadRequest struct {
 	Entities []string `json:"entities"`
 }

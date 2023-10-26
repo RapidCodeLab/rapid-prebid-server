@@ -2,8 +2,10 @@ package payload_handler
 
 import (
 	"encoding/json"
+	"net"
 
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
+	"github.com/prebid/openrtb/v17/openrtb2"
 	"github.com/valyala/fasthttp"
 )
 
@@ -18,7 +20,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	}
 
 	entities := make(
-		map[interfaces.EntityType][]interfaces.Entity,
+		[]interfaces.Entity, 0, len(req.Entities),
 	)
 
 	for _, entityID := range req.Entities {
@@ -27,8 +29,8 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 			h.logger.Errorf("entity provider: %s", err.Error())
 			continue
 		}
-		entities[entity.Type] = append(
-			entities[entity.Type],
+		entities = append(
+			entities,
 			entity,
 		)
 	}
@@ -37,10 +39,31 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		string(ctx.UserAgent()),
 	)
 
-	geoData, err := h.geoDetector.Detect()
+	geoData, err := h.geoDetector.Detect(
+		net.ParseIP(ctx.RemoteIP().String()),
+	)
 	if err != nil {
 		h.logger.Errorf("geo detect: %s", err.Error())
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
 		return
 	}
+
+	bidRequest := openrtb2.BidRequest{}
+
+	initBidRequest(
+		deviceData,
+		geoData,
+		entities[0].InventoryType,
+		&bidRequest,
+	)
+
+	res := payloadResponse{}
+	data, err := json.Marshal(res)
+	if err != nil {
+		ctx.SetStatusCode(fasthttp.StatusBadGateway)
+		return
+	}
+
+	ctx.SetContentType(contentTypeApplicationJson)
+	ctx.SetBody(data)
 }
