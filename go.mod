@@ -7,6 +7,7 @@ require (
 	github.com/boltdb/bolt v1.3.1
 	github.com/buaazp/fasthttprouter v0.1.1
 	github.com/caarlos0/env v3.5.0+incompatible
+	github.com/google/uuid v1.3.1
 	github.com/hamaxx/browscap_go v0.0.0-20221124083508-6c38c01cde45
 	github.com/oschwald/geoip2-golang v1.9.0
 	github.com/prebid/openrtb/v17 v17.1.0

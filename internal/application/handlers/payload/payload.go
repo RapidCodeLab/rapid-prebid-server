@@ -57,6 +57,21 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		&bidRequest,
 	)
 
+	for _, entity := range entities {
+		imp := openrtb2.Imp{
+			ID: entity.ID,
+		}
+		switch entity.Type {
+		case interfaces.EntityTypeBanner:
+			imp.Banner = &openrtb2.Banner{}
+		case interfaces.EntityTypeNative:
+			imp.Native = &openrtb2.Native{}
+		}
+		bidRequest.Imp = append(bidRequest.Imp, imp)
+	}
+
+	//request DSPs
+
 	res := payloadResponse{}
 	data, err := json.Marshal(res)
 	if err != nil {
