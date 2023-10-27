@@ -1,7 +1,6 @@
 package payload_handler
 
 import (
-	"context"
 	"encoding/json"
 	"net"
 	"sync"
@@ -82,7 +81,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		a := adapter
 		go func() {
 			defer wg.Done()
-			bidResponse, err := a.DoRequest(context.TODO(), bidRequest)
+			bidResponse, err := a.DoRequest(bidRequest)
 			if err != nil {
 				h.logger.Errorf("adapter request: %s", err.Error())
 			}
@@ -91,6 +90,19 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	}
 
 	wg.Done()
+
+	auctionParticipants := make(map[string][]openrtb2.Bid)
+
+	for _, res := range responses {
+		for _, seatBid := range res.SeatBid {
+			for _, bid := range seatBid.Bid {
+				auctionParticipants[bid.ID] = append(
+					auctionParticipants[bid.ID],
+					bid,
+				)
+			}
+		}
+	}
 
 	res := payloadResponse{}
 	data, err := json.Marshal(res)
