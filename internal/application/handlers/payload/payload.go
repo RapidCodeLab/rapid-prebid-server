@@ -104,7 +104,20 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		}
 	}
 
+	winners := make(map[string][]openrtb2.Bid)
+
 	res := payloadResponse{}
+
+	for entityID, winner := range winners {
+		for _, b := range winner {
+			p := payload{
+				EntityID: entityID,
+				Adm:      b.AdM,
+			}
+			res.Paylads = append(res.Paylads, p)
+		}
+	}
+
 	data, err := json.Marshal(res)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)

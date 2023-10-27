@@ -17,9 +17,9 @@ type payloadResponse struct {
 }
 
 type payload struct {
-	InventoryID string `json:"inventory_id"`
-	Type        string `json:"type"`
-	Adm         string `json:"adm"`
+	EntityID string `json:"entity_id"`
+	Type     string `json:"type"`
+	Adm      string `json:"adm"`
 }
 
 type Handler struct {

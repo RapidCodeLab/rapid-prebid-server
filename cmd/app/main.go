@@ -11,6 +11,8 @@ import (
 	"github.com/caarlos0/env"
 
 	zaplogger "github.com/RapidCodeLab/ZapLogger"
+	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device_detectors/browscap"
+	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo_detectors/geoip2"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/server"
 	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory_api/boltdb"
@@ -21,6 +23,8 @@ type Config struct {
 	ServerListeNetwork string `env:"SERVER_LISTEN_NETWORK,required"`
 	ServerListenAddr   string `env:"SERVER_LISTEN_ADDR,required"`
 	BoltDBPath         string `env:"BOLTDB_PATH,required"`
+	DeviceDBPath       string `env:"DEVICE_DB_PATH,required"`
+	GeoDBPath          string `env:"GEO_DB_PATH,required"`
 }
 
 func main() {
@@ -65,9 +69,26 @@ func main() {
 		os.Exit(1)
 	}
 
+	deviceDetector, err := browscap_devicedetector.New(config.DeviceDBPath)
+	if err != nil {
+		l.Errorf("deviceDB open", "err", err.Error())
+		os.Exit(1)
+	}
+
+	geoDetector, err := geoip2_detector.New(config.GeoDBPath, "ru")
+	if err != nil {
+		l.Errorf("geoDB open", "err", err.Error())
+		os.Exit(1)
+	}
+
 	app := core.New(s, l)
 
-	err = app.Start(ctx, invStorager)
+	err = app.Start(
+		ctx,
+		invStorager,
+		deviceDetector,
+		geoDetector,
+	)
 	if err != nil {
 		l.Errorf("app exit", "err", err.Error())
 		os.Exit(1)
