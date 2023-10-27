@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory_api"
+	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory-api"
 	payload_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/payload"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/buaazp/fasthttprouter"

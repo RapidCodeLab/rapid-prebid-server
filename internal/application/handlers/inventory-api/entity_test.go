@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory_api"
+	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory-api"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	mock_inventory "github.com/RapidCodeLab/rapid-prebid-server/mocks/inventory_api"
 	mock_logger "github.com/RapidCodeLab/rapid-prebid-server/mocks/logger"

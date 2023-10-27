@@ -11,11 +11,11 @@ import (
 	"github.com/caarlos0/env"
 
 	zaplogger "github.com/RapidCodeLab/ZapLogger"
-	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device_detectors/browscap"
-	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo_detectors/geoip2"
+	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device-detectors/browscap"
+	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo-detectors/geoip2"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/server"
-	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory_api/boltdb"
+	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory-api/boltdb"
 )
 
 type Config struct {
