@@ -5,6 +5,7 @@ import (
 	"net"
 	"sync"
 
+	default_auction "github.com/RapidCodeLab/rapid-prebid-server/auctions/default"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/prebid/openrtb/v17/openrtb2"
 	"github.com/valyala/fasthttp"
@@ -91,20 +92,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 
 	wg.Done()
 
-	auctionParticipants := make(map[string][]openrtb2.Bid)
-
-	for _, res := range responses {
-		for _, seatBid := range res.SeatBid {
-			for _, bid := range seatBid.Bid {
-				auctionParticipants[bid.ID] = append(
-					auctionParticipants[bid.ID],
-					bid,
-				)
-			}
-		}
-	}
-
-	winners := make(map[string][]openrtb2.Bid)
+	winners := default_auction.Auction(responses)
 
 	res := payloadResponse{}
 
