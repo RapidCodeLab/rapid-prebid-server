@@ -1,8 +1,6 @@
 package browscap_devicedetector
 
 import (
-	"errors"
-
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	bgo "github.com/hamaxx/browscap_go"
 	"github.com/prebid/openrtb/v17/adcom1"
@@ -10,9 +8,9 @@ import (
 
 const (
 	unknownDeviceType = 0
+	unknownBrowser    = "Unknown"
+	unknownPlatform   = "Unknown"
 )
-
-var notDetected error = errors.New("device not detected")
 
 type DeviceDetector struct {
 	reader *bgo.BrowsCap
@@ -32,7 +30,7 @@ func New(path string) (*DeviceDetector, error) {
 
 func (d *DeviceDetector) Detect(
 	ua string,
-) (interfaces.DeviceData, error) {
+) interfaces.DeviceData {
 	// TODO: добавить все доступные данные по юзерагенту,
 	// версии браузера, платформы, етс.
 
@@ -40,8 +38,10 @@ func (d *DeviceDetector) Detect(
 
 	b, ok := d.reader.GetBrowser(ua)
 	if !ok {
-		err := notDetected
-		return data, err
+		data.DeviceType = unknownDeviceType
+		data.Browser = unknownBrowser
+		data.Platform = unknownPlatform
+		return data
 	}
 
 	data.Browser = b.Browser
@@ -62,5 +62,5 @@ func (d *DeviceDetector) Detect(
 		data.DeviceType = unknownDeviceType
 	}
 
-	return data, nil
+	return data
 }

@@ -7,7 +7,12 @@ import (
 )
 
 type payloadHTTPServer interface {
-	Start(context.Context, interfaces.InventoryAPI) error
+	Start(
+		context.Context,
+		interfaces.InventoryStorager,
+		interfaces.DeviceDetector,
+		interfaces.GeoDetector,
+	) error
 }
 
 type Core struct {
@@ -25,7 +30,14 @@ func New(s payloadHTTPServer,
 }
 
 func (i *Core) Start(ctx context.Context,
-	invAPI interfaces.InventoryAPI,
+	invStorager interfaces.InventoryStorager,
+	deviceDetector interfaces.DeviceDetector,
+	geoDetector interfaces.GeoDetector,
 ) error {
-	return i.payloadHTTPServer.Start(ctx, invAPI)
+	return i.payloadHTTPServer.Start(
+		ctx,
+		invStorager,
+		deviceDetector,
+		geoDetector,
+	)
 }

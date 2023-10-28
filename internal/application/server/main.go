@@ -3,7 +3,8 @@ package server
 import (
 	"context"
 
-	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory_api"
+	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory-api"
+	payload_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/payload"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
@@ -21,15 +22,20 @@ func New(l interfaces.Logger,
 	network, addr string,
 ) *Server {
 	return &Server{
-		logger:        l,
-		httpServer:    &fasthttp.Server{},
+		logger: l,
+		httpServer: &fasthttp.Server{
+			Name: "Rapid Prebid Server",
+		},
 		listenNetwork: network,
 		listenAddr:    addr,
 	}
 }
 
-func (i *Server) Start(ctx context.Context,
-	invAPI interfaces.InventoryAPI,
+func (i *Server) Start(
+	ctx context.Context,
+	invStorager interfaces.InventoryStorager,
+	deviceDetector interfaces.DeviceDetector,
+	geoDetector interfaces.GeoDetector,
 ) error {
 	ln, err := reuseport.Listen(
 		i.listenNetwork,
@@ -40,8 +46,19 @@ func (i *Server) Start(ctx context.Context,
 
 	r := fasthttprouter.New()
 
-	invAPIHandler := inventoryapi_handler.New(i.logger, invAPI)
+	invAPIHandler := inventoryapi_handler.New(
+		i.logger,
+		invStorager,
+	)
 	invAPIHandler.LoadRoutes(r)
+
+	payloadHandler := payload_handler.New(
+		i.logger,
+		deviceDetector,
+		geoDetector,
+		nil,
+	)
+	payloadHandler.LoadRoutes(r)
 
 	i.httpServer.Handler = r.Handler
 

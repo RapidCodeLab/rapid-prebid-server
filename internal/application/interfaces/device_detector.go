@@ -9,5 +9,5 @@ type DeviceData struct {
 }
 
 type DeviceDetector interface {
-	Detect(userAgent string) (DeviceData, error)
+	Detect(userAgent string) DeviceData
 }

@@ -17,29 +17,29 @@ const (
 )
 
 type Entity struct {
-	ID                              string     `json:"id"`
-	Type                            EntityType `json:"type"`
-	InventoryID                     string     `json:"inventory_id"`   // OpenRTB Site.id or App.id
-	InventoryType                   int        `json:"inventory_type"` // OpenRTB Site or App object
-	IABCategories                   []string   `json:"iab_categories"`
-	BlockedAdvertisierIABCategories []string   `json:"blocked_advertisier_iab_categories"`
-	IABCategoriesTaxonomy           int        `json:"iab_categories_taxonomy"`
-	PlacementCount                  int        `json:"placement_count"` // for Native
-	Width                           int        `json:"width"`           // will be use as wmin for Native
-	Height                          int        `json:"height"`          // will be use as hmin for Native
+	ID                              string        `json:"id"`
+	Type                            EntityType    `json:"type"`
+	InventoryID                     string        `json:"inventory_id"`   // OpenRTB Site.id or App.id
+	InventoryType                   InventoryType `json:"inventory_type"` // OpenRTB Site or App object
+	IABCategories                   []string      `json:"iab_categories"`
+	BlockedAdvertisierIABCategories []string      `json:"blocked_advertisier_iab_categories"`
+	IABCategoriesTaxonomy           int           `json:"iab_categories_taxonomy"`
+	PlacementCount                  int           `json:"placement_count"` // for Native
+	Width                           int           `json:"width"`           // will be use as wmin for Native
+	Height                          int           `json:"height"`          // will be use as hmin for Native
 }
 
 type Inventory struct {
-	ID                              string   `json:"id"`
-	Name                            string   `json:"name"`
-	InventoryType                   int      `json:"inventory_type"` // OpenRTB Site or App object
-	IABCategories                   []string `json:"iab_categories"`
-	BlockedAdvertisierIABCategories []string `json:"blocked_advertisier_iab_categories"`
-	IABCategoriesTaxonomy           int      `json:"iab_categories_taxonomy"`
+	ID                              string        `json:"id,required"`
+	Name                            string        `json:"name"`
+	InventoryType                   InventoryType `json:"inventory_type"` // OpenRTB Site or App object
+	IABCategories                   []string      `json:"iab_categories"`
+	BlockedAdvertisierIABCategories []string      `json:"blocked_advertiser_iab_categories"`
+	IABCategoriesTaxonomy           int           `json:"iab_categories_taxonomy"`
 }
 
-type InventoryAPI interface {
-	EntityAPI
+type InventoryStorager interface {
+	EntityStorager
 	ReadAllInventories() ([]Inventory, error)
 	CreateInventory(Inventory) error
 	ReadInventory(ID string) (Inventory, error)
@@ -47,7 +47,7 @@ type InventoryAPI interface {
 	DeleteInventory(ID string) error
 }
 
-type EntityAPI interface {
+type EntityStorager interface {
 	ReadAllEntities() ([]Entity, error)
 	CreateEntity(Entity) error
 	ReadEntity(ID string) (Entity, error)

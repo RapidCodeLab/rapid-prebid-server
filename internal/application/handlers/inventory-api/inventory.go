@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) HandleReadAllInventories(ctx *fasthttp.RequestCtx) {
-	data, err := h.inventoryApi.ReadAllInventories()
+	data, err := h.invStorager.ReadAllInventories()
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -37,7 +37,7 @@ func (h *Handler) HandleCreateInventory(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	err = h.inventoryApi.CreateInventory(inv)
+	err = h.invStorager.CreateInventory(inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -46,7 +46,8 @@ func (h *Handler) HandleCreateInventory(ctx *fasthttp.RequestCtx) {
 
 func (h *Handler) HandleReadInventory(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	data, err := h.inventoryApi.ReadInventory(ID)
+
+	data, err := h.invStorager.ReadInventory(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -71,7 +72,7 @@ func (h *Handler) HandleUpdateInventory(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	err = h.inventoryApi.UpdateInventory(inv)
+	err = h.invStorager.UpdateInventory(inv)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
@@ -80,7 +81,7 @@ func (h *Handler) HandleUpdateInventory(ctx *fasthttp.RequestCtx) {
 
 func (h *Handler) HandleDeleteInventory(ctx *fasthttp.RequestCtx) {
 	ID := ctx.UserValue(idUserValue).(string)
-	err := h.inventoryApi.DeleteInventory(ID)
+	err := h.invStorager.DeleteInventory(ID)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return

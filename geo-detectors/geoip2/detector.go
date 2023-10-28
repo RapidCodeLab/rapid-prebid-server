@@ -26,7 +26,7 @@ func New(path,
 	return l, nil
 }
 
-func (l *GeoLocator) Locate(
+func (l *GeoLocator) Detect(
 	ip net.IP,
 ) (interfaces.GeoData, error) {
 	data := interfaces.GeoData{}
