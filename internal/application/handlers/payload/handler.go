@@ -36,11 +36,13 @@ func New(
 	dd interfaces.DeviceDetector,
 	gd interfaces.GeoDetector,
 	p interfaces.EntityProvider,
+	a []interfaces.DSPAdapter,
 ) *Handler {
 	return &Handler{
 		logger:         l,
 		deviceDetector: dd,
 		geoDetector:    gd,
 		entityProvider: p,
+		dspAdapters:    a,
 	}
 }

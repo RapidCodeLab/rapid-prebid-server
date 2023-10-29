@@ -2,7 +2,9 @@ package server
 
 import (
 	"context"
+	"errors"
 
+	dspadapters "github.com/RapidCodeLab/rapid-prebid-server/dsp-adapters"
 	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory-api"
 	payload_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/payload"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
@@ -10,6 +12,8 @@ import (
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/reuseport"
 )
+
+var NoEnabledDSPAdaptersErr = errors.New("At least one DSPAdapter must be enabled")
 
 type Server struct {
 	logger     interfaces.Logger
@@ -36,7 +40,12 @@ func (i *Server) Start(
 	invStorager interfaces.InventoryStorager,
 	deviceDetector interfaces.DeviceDetector,
 	geoDetector interfaces.GeoDetector,
+	enabledAdapters []interfaces.DSPName,
 ) error {
+	if len(enabledAdapters) < 1 {
+		return NoEnabledDSPAdaptersErr
+	}
+
 	ln, err := reuseport.Listen(
 		i.listenNetwork,
 		i.listenAddr)
@@ -52,11 +61,27 @@ func (i *Server) Start(
 	)
 	invAPIHandler.LoadRoutes(r)
 
+	adaptersInitializers := dspadapters.AdaptersInitializers()
+	adapters := []interfaces.DSPAdapter{}
+
+	for _, dspName := range enabledAdapters {
+		adapter, err := adaptersInitializers[dspName]()
+		if err != nil {
+			i.logger.Errorf("dsp adapter init: %s", err.Error())
+		}
+		adapters = append(adapters, adapter)
+	}
+
+	if len(adapters) < 1 {
+		return NoEnabledDSPAdaptersErr
+	}
+
 	payloadHandler := payload_handler.New(
 		i.logger,
 		deviceDetector,
 		geoDetector,
 		nil,
+		adapters,
 	)
 	payloadHandler.LoadRoutes(r)
 
