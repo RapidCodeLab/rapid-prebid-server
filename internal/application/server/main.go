@@ -41,6 +41,7 @@ func (i *Server) Start(
 	deviceDetector interfaces.DeviceDetector,
 	geoDetector interfaces.GeoDetector,
 	enabledAdapters []interfaces.DSPName,
+	dspConfigProvider interfaces.DSPConfigProvider,
 ) error {
 	if len(enabledAdapters) < 1 {
 		return NoEnabledDSPAdaptersErr
@@ -65,9 +66,16 @@ func (i *Server) Start(
 	adapters := []interfaces.DSPAdapter{}
 
 	for _, dspName := range enabledAdapters {
-		adapter, err := adaptersInitializers[dspName]()
+		config, err := dspConfigProvider.Read(dspName)
+		if err != nil {
+			i.logger.Errorf("dsp adapter config read: %s", err.Error())
+			continue
+		}
+
+		adapter, err := adaptersInitializers[dspName](config)
 		if err != nil {
 			i.logger.Errorf("dsp adapter init: %s", err.Error())
+			continue
 		}
 		adapters = append(adapters, adapter)
 	}

@@ -6,6 +6,10 @@ import (
 
 type DSPName string
 
+type DSPConfigProvider interface {
+	Read(DSPName) (DSPAdapterConfig, error)
+}
+
 type DSPAdapter interface {
 	DoRequest(
 		openrtb2.BidRequest) (
@@ -18,4 +22,4 @@ type DSPAdapterConfig struct {
 	Endpoint string
 }
 
-type NewDSPAdapter func() (DSPAdapter, error)
+type NewDSPAdapter func(DSPAdapterConfig) (DSPAdapter, error)

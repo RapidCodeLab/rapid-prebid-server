@@ -2,6 +2,7 @@ package payload_handler
 
 import (
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
+	"github.com/prebid/openrtb/v17/openrtb2"
 )
 
 const (
@@ -17,9 +18,9 @@ type payloadResponse struct {
 }
 
 type payload struct {
-	EntityID string `json:"entity_id"`
-	Type     string `json:"type"`
-	Adm      string `json:"adm"`
+	EntityID   string              `json:"entity_id"`
+	MarkupType openrtb2.MarkupType `json:"markup_type"`
+	Adm        string              `json:"adm"`
 }
 
 type Handler struct {

@@ -14,6 +14,7 @@ import (
 	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device-detectors/browscap"
 	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo-detectors/geoip2"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
+	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/server"
 	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory-api/boltdb"
 )
@@ -83,11 +84,14 @@ func main() {
 
 	app := core.New(s, l)
 
+	enabledDSPAdapters := []interfaces.DSPName{}
 	err = app.Start(
 		ctx,
 		invStorager,
 		deviceDetector,
 		geoDetector,
+		enabledDSPAdapters,
+		nil, // dsp config provider
 	)
 	if err != nil {
 		l.Errorf("app exit", "err", err.Error())
