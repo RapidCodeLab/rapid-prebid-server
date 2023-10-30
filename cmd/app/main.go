@@ -12,6 +12,7 @@ import (
 
 	zaplogger "github.com/RapidCodeLab/ZapLogger"
 	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device-detectors/browscap"
+	default_config_provider "github.com/RapidCodeLab/rapid-prebid-server/dsp-adapters/config-providers/default"
 	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo-detectors/geoip2"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
@@ -20,12 +21,13 @@ import (
 )
 
 type Config struct {
-	Debug              bool   `env:"DEBUG"`
-	ServerListeNetwork string `env:"SERVER_LISTEN_NETWORK,required"`
-	ServerListenAddr   string `env:"SERVER_LISTEN_ADDR,required"`
-	BoltDBPath         string `env:"BOLTDB_PATH,required"`
-	DeviceDBPath       string `env:"DEVICE_DB_PATH,required"`
-	GeoDBPath          string `env:"GEO_DB_PATH,required"`
+	Debug                     bool   `env:"DEBUG"`
+	ServerListeNetwork        string `env:"SERVER_LISTEN_NETWORK,required"`
+	ServerListenAddr          string `env:"SERVER_LISTEN_ADDR,required"`
+	BoltDBPath                string `env:"BOLTDB_PATH,required"`
+	DeviceDBPath              string `env:"DEVICE_DB_PATH,required"`
+	GeoDBPath                 string `env:"GEO_DB_PATH,required"`
+	DSPAdaptersConfigFilePath string `env:"DSP_ADPATERS_CONFIG_FILE_PATH, required"`
 }
 
 func main() {
@@ -45,7 +47,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	l.Infof("application started. %s", time.Now().Format("2006-01-02 15:04:05"))
+	l.Infof("application started. %s\n", time.Now().Format("2006-01-02 15:04:05"))
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -66,35 +68,40 @@ func main() {
 		config.BoltDBPath,
 		l)
 	if err != nil {
-		l.Errorf("boltDB open", "err", err.Error())
+		l.Errorf("boltDB open: %s\n", err.Error())
 		os.Exit(1)
 	}
 
 	deviceDetector, err := browscap_devicedetector.New(config.DeviceDBPath)
 	if err != nil {
-		l.Errorf("deviceDB open", "err", err.Error())
+		l.Errorf("deviceDB open: %s\n", err.Error())
 		os.Exit(1)
 	}
 
 	geoDetector, err := geoip2_detector.New(config.GeoDBPath, "ru")
 	if err != nil {
-		l.Errorf("geoDB open", "err", err.Error())
+		l.Errorf("geoDB open: %s\n", err.Error())
 		os.Exit(1)
 	}
 
 	app := core.New(s, l)
 
 	enabledDSPAdapters := []interfaces.DSPName{}
+	dspConfigProvider, err := default_config_provider.New(config.DSPAdaptersConfigFilePath)
+	if err != nil {
+		l.Errorf("dsp config provider: %s\n", err.Error())
+		os.Exit(1)
+	}
 	err = app.Start(
 		ctx,
 		invStorager,
 		deviceDetector,
 		geoDetector,
 		enabledDSPAdapters,
-		nil, // dsp config provider
+		dspConfigProvider,
 	)
 	if err != nil {
-		l.Errorf("app exit", "err", err.Error())
+		l.Errorf("app exit", err.Error())
 		os.Exit(1)
 	}
 
