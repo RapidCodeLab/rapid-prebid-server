@@ -21,13 +21,13 @@ import (
 )
 
 type Config struct {
-	Debug                     bool   `env:"DEBUG"`
-	ServerListeNetwork        string `env:"SERVER_LISTEN_NETWORK,required"`
-	ServerListenAddr          string `env:"SERVER_LISTEN_ADDR,required"`
-	BoltDBPath                string `env:"BOLTDB_PATH,required"`
-	DeviceDBPath              string `env:"DEVICE_DB_PATH,required"`
-	GeoDBPath                 string `env:"GEO_DB_PATH,required"`
-	DSPAdaptersConfigFilePath string `env:"DSP_ADPATERS_CONFIG_FILE_PATH, required"`
+	Debug                      bool   `env:"DEBUG"`
+	ServerListeNetwork         string `env:"SERVER_LISTEN_NETWORK,required"`
+	ServerListenAddr           string `env:"SERVER_LISTEN_ADDR,required"`
+	BoltDBPath                 string `env:"BOLTDB_PATH,required"`
+	DeviceDBPath               string `env:"DEVICE_DB_PATH,required"`
+	GeoDBPath                  string `env:"GEO_DB_PATH,required"`
+	DSPAdaptersConfigFilesPath string `env:"DSP_ADAPTERS_CONFIG_FILES_PATH,required"`
 }
 
 func main() {
@@ -96,7 +96,7 @@ func main() {
 
 	enabledDSPAdapters := []interfaces.DSPName{}
 	dspConfigProvider, err := default_config_provider.New(
-		config.DSPAdaptersConfigFilePath,
+		config.DSPAdaptersConfigFilesPath,
 		l,
 	)
 	if err != nil {
@@ -112,7 +112,7 @@ func main() {
 		dspConfigProvider,
 	)
 	if err != nil {
-		l.Errorf("app exit", err.Error())
+		l.Errorf("app exit: %s\n", err.Error())
 		os.Exit(1)
 	}
 

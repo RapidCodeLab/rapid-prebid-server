@@ -18,8 +18,8 @@ type DSPAdapter interface {
 }
 
 type DSPAdapterConfig struct {
-	Name     DSPName
-	Endpoint string
+	Name     DSPName `json:"name"`
+	Endpoint string  `json:"endpoint"`
 }
 
 type NewDSPAdapter func(DSPAdapterConfig) (DSPAdapter, error)
