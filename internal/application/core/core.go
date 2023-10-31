@@ -12,6 +12,8 @@ type payloadHTTPServer interface {
 		interfaces.InventoryStorager,
 		interfaces.DeviceDetector,
 		interfaces.GeoDetector,
+		[]interfaces.DSPName,
+		interfaces.DSPConfigProvider,
 	) error
 }
 
@@ -33,11 +35,15 @@ func (i *Core) Start(ctx context.Context,
 	invStorager interfaces.InventoryStorager,
 	deviceDetector interfaces.DeviceDetector,
 	geoDetector interfaces.GeoDetector,
+	enabledDSPAdapters []interfaces.DSPName,
+	dspConfigProvider interfaces.DSPConfigProvider,
 ) error {
 	return i.payloadHTTPServer.Start(
 		ctx,
 		invStorager,
 		deviceDetector,
 		geoDetector,
+		enabledDSPAdapters,
+		dspConfigProvider,
 	)
 }
