@@ -47,7 +47,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	l.Infof("application started. %s\n", time.Now().Format("2006-01-02 15:04:05"))
+	l.Infof(
+		"application started. %s\n",
+		time.Now().Format("2006-01-02 15:04:05"),
+	)
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -72,13 +75,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	deviceDetector, err := browscap_devicedetector.New(config.DeviceDBPath)
+	deviceDetector, err := browscap_devicedetector.New(
+		config.DeviceDBPath,
+	)
 	if err != nil {
 		l.Errorf("deviceDB open: %s\n", err.Error())
 		os.Exit(1)
 	}
 
-	geoDetector, err := geoip2_detector.New(config.GeoDBPath, "ru")
+	geoDetector, err := geoip2_detector.New(
+		config.GeoDBPath,
+		"ru",
+	)
 	if err != nil {
 		l.Errorf("geoDB open: %s\n", err.Error())
 		os.Exit(1)
@@ -87,7 +95,10 @@ func main() {
 	app := core.New(s, l)
 
 	enabledDSPAdapters := []interfaces.DSPName{}
-	dspConfigProvider, err := default_config_provider.New(config.DSPAdaptersConfigFilePath)
+	dspConfigProvider, err := default_config_provider.New(
+		config.DSPAdaptersConfigFilePath,
+		l,
+	)
 	if err != nil {
 		l.Errorf("dsp config provider: %s\n", err.Error())
 		os.Exit(1)
@@ -105,5 +116,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	l.Infof("application successfully stopped. %s", time.Now().Format("2006-01-02 15:04:05"))
+	l.Infof(
+		"application successfully stopped. %s",
+		time.Now().Format("2006-01-02 15:04:05"),
+	)
 }
