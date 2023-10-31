@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	dspadapters "github.com/RapidCodeLab/rapid-prebid-server/dsp-adapters"
 	inventoryapi_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/inventory-api"
 	payload_handler "github.com/RapidCodeLab/rapid-prebid-server/internal/application/handlers/payload"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
@@ -62,32 +61,12 @@ func (i *Server) Start(
 	)
 	invAPIHandler.LoadRoutes(r)
 
-	adaptersInitializers := dspadapters.AdaptersInitializers()
-	adapters := []interfaces.DSPAdapter{}
-
-	for _, dspName := range enabledAdapters {
-		config, err := dspConfigProvider.Read(dspName)
-		if err != nil {
-			i.logger.Errorf("dsp adapter config read: %s", err.Error())
-			continue
-		}
-
-		init, ok := adaptersInitializers[dspName]
-		if !ok {
-			i.logger.Errorf("dsp initializer not found: %s", dspName)
-			continue
-		}
-
-		adapter, err := init(config)
-		if err != nil {
-			i.logger.Errorf("dsp adapter init: %s", err.Error())
-			continue
-		}
-		adapters = append(adapters, adapter)
-	}
-
-	if len(adapters) < 1 {
-		return NoEnabledDSPAdaptersErr
+	adapters, err := i.initDSPAdapters(
+		enabledAdapters,
+		dspConfigProvider,
+	)
+	if err != nil {
+		return err
 	}
 
 	payloadHandler := payload_handler.New(
