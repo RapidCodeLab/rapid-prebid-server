@@ -94,7 +94,10 @@ func main() {
 
 	app := core.New(s, l)
 
-	enabledDSPAdapters := []interfaces.DSPName{}
+	enabledDSPAdapters := []interfaces.DSPName{
+		"demo-dsp-1",
+	}
+
 	dspConfigProvider, err := default_config_provider.New(
 		config.DSPAdaptersConfigFilesPath,
 		l,

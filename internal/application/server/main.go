@@ -72,7 +72,13 @@ func (i *Server) Start(
 			continue
 		}
 
-		adapter, err := adaptersInitializers[dspName](config)
+		init, ok := adaptersInitializers[dspName]
+		if !ok {
+			i.logger.Errorf("dsp initializer not found: %s", dspName)
+			continue
+		}
+
+		adapter, err := init(config)
 		if err != nil {
 			i.logger.Errorf("dsp adapter init: %s", err.Error())
 			continue

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	DefaultAdapter = "default"
+	DefaultAdapter = "demo-dsp-1"
 )
 
 func AdaptersInitializers() map[interfaces.DSPName]interfaces.NewDSPAdapter {
