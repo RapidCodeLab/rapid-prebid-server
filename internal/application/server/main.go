@@ -37,6 +37,7 @@ func New(l interfaces.Logger,
 func (i *Server) Start(
 	ctx context.Context,
 	invStorager interfaces.InventoryStorager,
+	entityProvider interfaces.EntityProvider,
 	deviceDetector interfaces.DeviceDetector,
 	geoDetector interfaces.GeoDetector,
 	enabledAdapters []interfaces.DSPName,
@@ -73,7 +74,7 @@ func (i *Server) Start(
 		i.logger,
 		deviceDetector,
 		geoDetector,
-		nil,
+		entityProvider,
 		adapters,
 	)
 	payloadHandler.LoadRoutes(r)

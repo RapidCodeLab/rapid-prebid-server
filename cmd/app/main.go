@@ -13,11 +13,12 @@ import (
 	zaplogger "github.com/RapidCodeLab/ZapLogger"
 	browscap_devicedetector "github.com/RapidCodeLab/rapid-prebid-server/device-detectors/browscap"
 	default_config_provider "github.com/RapidCodeLab/rapid-prebid-server/dsp-adapters/config-providers/default"
+	boltdb_entity_provider "github.com/RapidCodeLab/rapid-prebid-server/entity-providers/boltdb"
 	geoip2_detector "github.com/RapidCodeLab/rapid-prebid-server/geo-detectors/geoip2"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/core"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/server"
-	inventoryapiboltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory-api/boltdb"
+	inventorystorage_boltdb "github.com/RapidCodeLab/rapid-prebid-server/inventory-storage/boltdb"
 )
 
 type Config struct {
@@ -66,7 +67,7 @@ func main() {
 		config.ServerListeNetwork,
 		config.ServerListenAddr)
 
-	invStorager, err := inventoryapiboltdb.New(
+	invStorager, err := inventorystorage_boltdb.New(
 		ctx,
 		config.BoltDBPath,
 		l)
@@ -74,6 +75,10 @@ func main() {
 		l.Errorf("boltDB open: %s\n", err.Error())
 		os.Exit(1)
 	}
+
+	entityProvider := boltdb_entity_provider.New(
+		invStorager,
+	)
 
 	deviceDetector, err := browscap_devicedetector.New(
 		config.DeviceDBPath,
@@ -109,6 +114,7 @@ func main() {
 	err = app.Start(
 		ctx,
 		invStorager,
+		entityProvider,
 		deviceDetector,
 		geoDetector,
 		enabledDSPAdapters,

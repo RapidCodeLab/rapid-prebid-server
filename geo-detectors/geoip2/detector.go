@@ -37,8 +37,13 @@ func (l *GeoLocator) Detect(
 	}
 
 	data.CountryCode = d.Country.IsoCode
-	data.Region = d.Subdivisions[0].Names[l.namesLanguage]
-	data.City = d.City.Names[l.namesLanguage]
+	if len(d.Subdivisions) > 0 {
+		data.Region = d.Subdivisions[0].Names[l.namesLanguage]
+	}
+	cityName, ok := d.City.Names[l.namesLanguage]
+	if ok {
+		data.City = cityName
+	}
 
 	return data, nil
 }

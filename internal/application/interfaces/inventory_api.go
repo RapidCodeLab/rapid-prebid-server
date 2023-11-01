@@ -48,9 +48,13 @@ type InventoryStorager interface {
 }
 
 type EntityStorager interface {
+	EntityReadStorager
 	ReadAllEntities() ([]Entity, error)
 	CreateEntity(Entity) error
-	ReadEntity(ID string) (Entity, error)
 	UpdateEntity(Entity) error
 	DeleteEntity(ID string) error
+}
+
+type EntityReadStorager interface {
+	ReadEntity(ID string) (Entity, error)
 }
