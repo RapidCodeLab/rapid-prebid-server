@@ -60,7 +60,7 @@ func (i *provider) Read(
 	interfaces.DSPAdapterConfig,
 	error,
 ) {
-	return interfaces.DSPAdapterConfig{}, nil
+	return i.data[name], nil
 }
 
 func findFiles(root, ext string) ([]string, error) {

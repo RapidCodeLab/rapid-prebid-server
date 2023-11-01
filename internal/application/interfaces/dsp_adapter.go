@@ -18,8 +18,9 @@ type DSPAdapter interface {
 }
 
 type DSPAdapterConfig struct {
-	Name     DSPName `json:"name"`
-	Endpoint string  `json:"endpoint"`
+	Name          DSPName `json:"name"`
+	Endpoint      string  `json:"endpoint"`
+	RequestTimout int64   `json:"request_timeout"`
 }
 
 type NewDSPAdapter func(DSPAdapterConfig) (DSPAdapter, error)

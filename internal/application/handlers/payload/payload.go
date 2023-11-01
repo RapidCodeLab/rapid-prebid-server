@@ -37,6 +37,11 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		)
 	}
 
+	if len(entities) < 1 {
+		ctx.SetStatusCode(fasthttp.StatusNotFound)
+		return
+	}
+
 	deviceData := h.deviceDetector.Detect(
 		string(ctx.UserAgent()),
 	)
@@ -90,7 +95,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		}()
 	}
 
-	wg.Done()
+	wg.Wait()
 
 	winners := default_auction.Auction(responses)
 

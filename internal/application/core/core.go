@@ -10,6 +10,7 @@ type payloadHTTPServer interface {
 	Start(
 		context.Context,
 		interfaces.InventoryStorager,
+		interfaces.EntityProvider,
 		interfaces.DeviceDetector,
 		interfaces.GeoDetector,
 		[]interfaces.DSPName,
@@ -33,6 +34,7 @@ func New(s payloadHTTPServer,
 
 func (i *Core) Start(ctx context.Context,
 	invStorager interfaces.InventoryStorager,
+	entityProvider interfaces.EntityProvider,
 	deviceDetector interfaces.DeviceDetector,
 	geoDetector interfaces.GeoDetector,
 	enabledDSPAdapters []interfaces.DSPName,
@@ -41,6 +43,7 @@ func (i *Core) Start(ctx context.Context,
 	return i.payloadHTTPServer.Start(
 		ctx,
 		invStorager,
+		entityProvider,
 		deviceDetector,
 		geoDetector,
 		enabledDSPAdapters,

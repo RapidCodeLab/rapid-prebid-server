@@ -1,4 +1,5 @@
 {
   "name":"demo-dsp-1",
-  "enpoint":"http:/127.0.0.1:8060/rtb"
+  "endpoint":"http://127.0.0.1:8060/rtb",
+  "request_timeout":500
 }

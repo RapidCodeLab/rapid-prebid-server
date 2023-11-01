@@ -67,5 +67,9 @@ func NewDSPAdpater(
 		Name:       c.Name,
 		httpClient: &fasthttp.Client{},
 		endpintURI: c.Endpoint,
+		requestTimout: time.Duration(
+			time.Duration(c.RequestTimout) *
+				time.Millisecond,
+		),
 	}, nil
 }

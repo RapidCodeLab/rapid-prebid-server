@@ -1,4 +1,4 @@
-package inventoryapiboltdb
+package inventorystorage_boltdb
 
 import (
 	"context"
