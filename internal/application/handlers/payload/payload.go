@@ -90,12 +90,18 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 			bidResponse, err := a.DoRequest(bidRequest)
 			if err != nil {
 				h.logger.Errorf("adapter request: %s", err.Error())
+				return
 			}
 			responses = append(responses, bidResponse)
 		}()
 	}
 
 	wg.Wait()
+
+	if len(responses) < 1 {
+		ctx.SetStatusCode(fasthttp.StatusNoContent)
+		return
+	}
 
 	winners := default_auction.Auction(responses)
 
