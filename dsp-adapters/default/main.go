@@ -16,6 +16,11 @@ type adapter struct {
 	endpintURI    string
 }
 
+
+func (i *adapter) GetName() interfaces.DSPName {
+	return i.Name
+}
+
 func (i *adapter) DoRequest(
 	bidRequest openrtb2.BidRequest,
 ) (

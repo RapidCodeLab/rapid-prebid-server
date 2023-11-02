@@ -89,7 +89,11 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 			defer wg.Done()
 			bidResponse, err := a.DoRequest(bidRequest)
 			if err != nil {
-				h.logger.Errorf("adapter request: %s", err.Error())
+				h.logger.Errorf(
+					"adapter %s request: %s",
+					a.GetName(),
+					err.Error(),
+				)
 				return
 			}
 			responses = append(responses, bidResponse)

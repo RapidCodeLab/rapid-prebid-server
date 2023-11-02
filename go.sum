@@ -1,5 +1,5 @@
-github.com/RapidCodeLab/ZapLogger v0.0.5 h1:n08k3vAQomFhHRgn4p5CdCHTX7kWGxLQThzczTE7eq8=
-github.com/RapidCodeLab/ZapLogger v0.0.5/go.mod h1:m7s4n1xk/2gA4Gg5jJ9cByz7srKlAIb+ZozUAzMl22I=
+github.com/RapidCodeLab/ZapLogger v0.0.6 h1:tMUTm7DRRfVFsF3Oq8jUr4prwkOYO+cGw/mIN9dlOAI=
+github.com/RapidCodeLab/ZapLogger v0.0.6/go.mod h1:m7s4n1xk/2gA4Gg5jJ9cByz7srKlAIb+ZozUAzMl22I=
 github.com/andybalholm/brotli v1.0.6 h1:Yf9fFpf49Zrxb9NlQaluyE92/+X7UVHlhMNJN2sxfOI=
 github.com/andybalholm/brotli v1.0.6/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHGRSepvi9Eig=
 github.com/boltdb/bolt v1.3.1 h1:JQmyP4ZBrce+ZQu0dY660FMfatumYDLun9hBCUVIkF4=
@@ -26,8 +26,8 @@ github.com/golang/protobuf v1.4.3/go.mod h1:oDoupMAO8OvCJWAcko0GGGIgR6R6ocIYbsSw
 github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/google/uuid v1.3.1 h1:KjJaJ9iWZ3jOFZIf1Lqf4laDRCasjl0BCmnEGxkdLb4=
-github.com/google/uuid v1.3.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
+github.com/google/uuid v1.4.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/hamaxx/browscap_go v0.0.0-20221124083508-6c38c01cde45 h1:KiK2GmY4G4gkEorx1r52L9LijJq9hAS3uayR2MB9HbQ=
 github.com/hamaxx/browscap_go v0.0.0-20221124083508-6c38c01cde45/go.mod h1:1BuvSWIKqzOGEeGk9YGs4sopG+HFZ2QAsfixpi7PzU8=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=

@@ -12,6 +12,7 @@ type (
 	}
 
 	DSPAdapter interface {
+		GetName() DSPName
 		DoRequest(
 			openrtb2.BidRequest) (
 			openrtb2.BidResponse,
