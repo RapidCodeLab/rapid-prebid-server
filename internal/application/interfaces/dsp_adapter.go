@@ -1,8 +1,12 @@
 package interfaces
 
 import (
+	"errors"
+
 	"github.com/prebid/openrtb/v17/openrtb2"
 )
+
+var DSPResponseErr = errors.New("dsp response status not 200ok")
 
 type (
 	DSPName string
@@ -12,6 +16,7 @@ type (
 	}
 
 	DSPAdapter interface {
+		GetName() DSPName
 		DoRequest(
 			openrtb2.BidRequest) (
 			openrtb2.BidResponse,

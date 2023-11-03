@@ -2,6 +2,8 @@ package default_dsp_adapter
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
@@ -14,6 +16,10 @@ type adapter struct {
 	httpClient    *fasthttp.Client
 	requestTimout time.Duration
 	endpintURI    string
+}
+
+func (i *adapter) GetName() interfaces.DSPName {
+	return i.Name
 }
 
 func (i *adapter) DoRequest(
@@ -36,9 +42,9 @@ func (i *adapter) DoRequest(
 	if err != nil {
 		return bidResponse, err
 	}
-
 	httpReq.SetBody(reqBody)
 	httpReq.SetRequestURI(i.endpintURI)
+	httpReq.Header.SetMethod(fasthttp.MethodPost)
 
 	err = i.httpClient.DoTimeout(
 		httpReq,
@@ -48,9 +54,18 @@ func (i *adapter) DoRequest(
 	if err != nil {
 		return bidResponse, err
 	}
+	if httpRes.StatusCode() != fasthttp.StatusOK {
+		return bidResponse,
+			errors.New(
+				fmt.Sprintf("%s: response status: %d",
+					interfaces.DSPResponseErr.Error(),
+					httpRes.StatusCode(),
+				),
+			)
+	}
 
 	err = json.Unmarshal(
-		httpReq.Body(),
+		httpRes.Body(),
 		&bidResponse,
 	)
 	if err != nil {

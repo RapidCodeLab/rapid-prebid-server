@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -29,6 +30,7 @@ type Config struct {
 	DeviceDBPath               string `env:"DEVICE_DB_PATH,required"`
 	GeoDBPath                  string `env:"GEO_DB_PATH,required"`
 	DSPAdaptersConfigFilesPath string `env:"DSP_ADAPTERS_CONFIG_FILES_PATH,required"`
+	EnabledDSPApdapters        string `env:"ENABLED_DSP_ADAPTERS,required"`
 }
 
 func main() {
@@ -99,8 +101,15 @@ func main() {
 
 	app := core.New(s, l)
 
-	enabledDSPAdapters := []interfaces.DSPName{
-		"demo-dsp-1",
+	enabledDSPAdapters := []interfaces.DSPName{}
+
+	dspNames := strings.Split(config.EnabledDSPApdapters, ",")
+	if len(dspNames) < 1 {
+		l.Errorf("len of enabled dsp in config is: %d\n", len(dspNames))
+		os.Exit(1)
+	}
+	for _, dspName := range dspNames {
+		enabledDSPAdapters = append(enabledDSPAdapters, interfaces.DSPName(dspName))
 	}
 
 	dspConfigProvider, err := default_config_provider.New(

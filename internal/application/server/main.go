@@ -21,7 +21,8 @@ type Server struct {
 	listenAddr string
 }
 
-func New(l interfaces.Logger,
+func New(
+	l interfaces.Logger,
 	network, addr string,
 ) *Server {
 	return &Server{
@@ -85,7 +86,7 @@ func (i *Server) Start(
 		<-ctx.Done()
 		err := i.httpServer.Shutdown()
 		if err != nil {
-			i.logger.Errorf("server shutdown", "error", err.Error())
+			i.logger.Errorf("server shutdown: %s", err.Error())
 		}
 	}()
 

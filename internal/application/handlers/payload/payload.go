@@ -89,7 +89,11 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 			defer wg.Done()
 			bidResponse, err := a.DoRequest(bidRequest)
 			if err != nil {
-				h.logger.Errorf("adapter request: %s", err.Error())
+				h.logger.Errorf(
+					"adapter %s request: %s",
+					a.GetName(),
+					err.Error(),
+				)
 				return
 			}
 			responses = append(responses, bidResponse)
@@ -97,24 +101,26 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	}
 
 	wg.Wait()
-
 	if len(responses) < 1 {
 		ctx.SetStatusCode(fasthttp.StatusNoContent)
 		return
 	}
 
 	winners := default_auction.Auction(responses)
+	if len(winners) < 1 {
+		ctx.SetStatusCode(fasthttp.StatusNoContent)
+		return
+	}
 
 	res := payloadResponse{}
 
-	for entityID, winner := range winners {
-		for _, b := range winner {
-			p := payload{
-				EntityID: entityID,
-				Adm:      b.AdM,
-			}
-			res.Paylads = append(res.Paylads, p)
+	for _, winner := range winners {
+		p := payload{
+			EntityID:   winner.(openrtb2.Bid).ImpID,
+			Adm:        winner.(openrtb2.Bid).AdM,
+			MarkupType: winner.(openrtb2.Bid).MType,
 		}
+		res.Paylads = append(res.Paylads, p)
 	}
 
 	data, err := json.Marshal(res)
