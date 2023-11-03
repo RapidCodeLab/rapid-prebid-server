@@ -1,12 +1,25 @@
 package default_auction
 
-import "github.com/prebid/openrtb/v17/openrtb2"
+import (
+	"github.com/RapidCodeLab/rapid-prebid-server/auctions/algorythms/timsort"
+	"github.com/prebid/openrtb/v17/openrtb2"
+)
+
+func ByPrice(a, b interface{}) bool {
+	return a.(openrtb2.Bid).Price > b.(openrtb2.Bid).Price
+}
+
+// timsort algorytm
+func Sort(participants []interface{}, seat int) []interface{} {
+	timsort.Sort(participants, ByPrice)
+	return participants[0:seat]
+}
 
 func Auction(
 	responses []openrtb2.BidResponse,
-) map[string][]openrtb2.Bid {
+) []interface{} {
 	auctionParticipants := make(
-		map[string][]openrtb2.Bid,
+		map[string][]interface{},
 	)
 
 	for _, res := range responses {
@@ -20,6 +33,16 @@ func Auction(
 		}
 	}
 
-	winners := make(map[string][]openrtb2.Bid)
+	winners := make(
+		[]interface{},
+		0,
+		len(auctionParticipants),
+	)
+
+	for _, impParticipants := range auctionParticipants {
+		impWinners := Sort(impParticipants, 1)
+		winners = append(winners, impWinners...)
+	}
+
 	return winners
 }

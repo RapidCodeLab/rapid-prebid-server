@@ -42,7 +42,6 @@ func (i *adapter) DoRequest(
 	if err != nil {
 		return bidResponse, err
 	}
-
 	httpReq.SetBody(reqBody)
 	httpReq.SetRequestURI(i.endpintURI)
 	httpReq.Header.SetMethod(fasthttp.MethodPost)
@@ -66,7 +65,7 @@ func (i *adapter) DoRequest(
 	}
 
 	err = json.Unmarshal(
-		httpReq.Body(),
+		httpRes.Body(),
 		&bidResponse,
 	)
 	if err != nil {
