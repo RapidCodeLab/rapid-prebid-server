@@ -15,4 +15,10 @@ tasks:
     cmds:
       - go build -o .bin/app cmd/app/main.go 
       - chmod +x .bin/app
-      - ./.bin/app 
+      - ./.bin/app
+  env-up:
+    cmds:
+      - docker-compose -f dev-env/docker-compose.yml up -d
+  env-down:
+    cmds:
+      - docker-compose -f dev-env/docker-compose.yml down

@@ -108,6 +108,10 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	}
 
 	winners := default_auction.Auction(responses)
+	if len(winners) < 1 {
+		ctx.SetStatusCode(fasthttp.StatusNoContent)
+		return
+	}
 
 	res := payloadResponse{}
 
