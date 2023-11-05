@@ -2,7 +2,7 @@ version: '3'
 services:
   demo-dsp-1:
     container_name: demo-dsp-1
-    image: rapidcodelab/fakedsp
+    image: rapidcodelab/fakedsp:0.0.12
     logging:
       options:
         max-size: "50k"
