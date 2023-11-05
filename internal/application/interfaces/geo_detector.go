@@ -10,5 +10,7 @@ type (
 		CountryCode string
 		Region      string
 		City        string
+		IP          string
+		IPv6        string
 	}
 )

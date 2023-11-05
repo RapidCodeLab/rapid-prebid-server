@@ -36,6 +36,8 @@ func (d *DeviceDetector) Detect(
 
 	data := interfaces.DeviceData{}
 
+	data.UserAgent = ua
+
 	b, ok := d.reader.GetBrowser(ua)
 	if !ok {
 		data.DeviceType = unknownDeviceType

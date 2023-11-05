@@ -7,6 +7,7 @@ import (
 
 	default_auction "github.com/RapidCodeLab/rapid-prebid-server/auctions/default"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
+	ipdetect "github.com/RapidCodeLab/rapid-prebid-server/pkg/ip-detect"
 	"github.com/prebid/openrtb/v17/openrtb2"
 	"github.com/valyala/fasthttp"
 )
@@ -47,7 +48,9 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	)
 
 	geoData, err := h.geoDetector.Detect(
-		net.ParseIP(ctx.RemoteIP().String()),
+		net.ParseIP(
+			ipdetect.FromRequest(ctx),
+		),
 	)
 	if err != nil {
 		h.logger.Errorf("geo detect: %s", err.Error())
@@ -60,22 +63,14 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	initBidRequest(
 		deviceData,
 		geoData,
+		entities[0].InventoryID,
 		entities[0].InventoryType,
+		entities[0].IABCategories,
+		entities[0].IABCategoriesTaxonomy,
 		&bidRequest,
 	)
 
-	for _, entity := range entities {
-		imp := openrtb2.Imp{
-			ID: entity.ID,
-		}
-		switch entity.Type {
-		case interfaces.EntityTypeBanner:
-			imp.Banner = &openrtb2.Banner{}
-		case interfaces.EntityTypeNative:
-			imp.Native = &openrtb2.Native{}
-		}
-		bidRequest.Imp = append(bidRequest.Imp, imp)
-	}
+	bidRequest.Imp = prepareImpObjects(entities)
 
 	responses := make([]openrtb2.BidResponse, 0, len(h.dspAdapters))
 

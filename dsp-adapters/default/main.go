@@ -2,7 +2,6 @@ package default_dsp_adapter
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"time"
 
@@ -56,11 +55,9 @@ func (i *adapter) DoRequest(
 	}
 	if httpRes.StatusCode() != fasthttp.StatusOK {
 		return bidResponse,
-			errors.New(
-				fmt.Sprintf("%s: response status: %d",
-					interfaces.DSPResponseErr.Error(),
-					httpRes.StatusCode(),
-				),
+			fmt.Errorf("%s: response status: %d",
+				interfaces.DSPResponseErr.Error(),
+				httpRes.StatusCode(),
 			)
 	}
 

@@ -2,7 +2,7 @@ version: '3'
 services:
   demo-dsp-1:
     container_name: demo-dsp-1
-    image: rapidcodelab/fakedsp
+    image: rapidcodelab/fakedsp:0.0.12
     logging:
       options:
         max-size: "50k"
@@ -12,5 +12,19 @@ services:
       - 8060:8080
     volumes:
       - ./ads-dsp-1.json:/ads.json
+    environment:
+      ADS_DATABASE_PATH: /ads.json
+  demo-dsp-2:
+    container_name: demo-dsp-2
+    image: rapidcodelab/fakedsp:0.0.12
+    logging:
+      options:
+        max-size: "50k"
+        max-file: "5"
+    restart: always
+    ports:
+      - 8070:8080
+    volumes:
+      - ./ads-dsp-2.json:/ads.json
     environment:
       ADS_DATABASE_PATH: /ads.json
