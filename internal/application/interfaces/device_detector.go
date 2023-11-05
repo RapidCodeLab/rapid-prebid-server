@@ -10,5 +10,6 @@ type (
 		Browser    string
 		Platform   string
 		DeviceType adcom1.DeviceType
+		UserAgent  string
 	}
 )

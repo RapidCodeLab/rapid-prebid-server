@@ -31,6 +31,13 @@ func (l *GeoLocator) Detect(
 ) (interfaces.GeoData, error) {
 	data := interfaces.GeoData{}
 
+	if ip.To4() != nil {
+		data.IP = ip.String()
+	}
+	if ip.To16() != nil {
+		data.IPv6 = ip.String()
+	}
+
 	d, err := l.reader.City(ip)
 	if err != nil {
 		return data, err
