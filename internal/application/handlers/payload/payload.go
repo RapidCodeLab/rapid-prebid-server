@@ -101,7 +101,15 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	winners := default_auction.Auction(responses)
+	placementCountMeta := make(map[string]int64)
+	for _, e := range entities {
+		placementCountMeta[e.ID] = e.PlacementCount
+	}
+
+	winners := default_auction.Auction(
+		responses,
+		placementCountMeta,
+	)
 	if len(winners) < 1 {
 		ctx.SetStatusCode(fasthttp.StatusNoContent)
 		return

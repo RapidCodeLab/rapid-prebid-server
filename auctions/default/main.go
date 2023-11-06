@@ -10,13 +10,17 @@ func ByPrice(a, b interface{}) bool {
 }
 
 // timsort algorytm
-func Sort(participants []interface{}, seat int) []interface{} {
+func Sort(
+	participants []interface{},
+	plcmntCount int64,
+) []interface{} {
 	timsort.Sort(participants, ByPrice)
-	return participants[0:seat]
+	return participants[0:plcmntCount]
 }
 
 func Auction(
 	responses []openrtb2.BidResponse,
+	placementCountMeta map[string]int64,
 ) []interface{} {
 	auctionParticipants := make(
 		map[string][]interface{},
@@ -39,8 +43,11 @@ func Auction(
 		len(auctionParticipants),
 	)
 
-	for _, impParticipants := range auctionParticipants {
-		impWinners := Sort(impParticipants, 1)
+	for entityID, impParticipants := range auctionParticipants {
+		impWinners := Sort(
+			impParticipants,
+			placementCountMeta[entityID],
+		)
 		winners = append(winners, impWinners...)
 	}
 
