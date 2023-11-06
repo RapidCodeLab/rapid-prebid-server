@@ -7,7 +7,6 @@ import (
 	default_auction "github.com/RapidCodeLab/rapid-prebid-server/auctions/default"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
 	ipdetect "github.com/RapidCodeLab/rapid-prebid-server/pkg/ip-detect"
-	"github.com/prebid/openrtb/v17/openrtb2"
 	"github.com/valyala/fasthttp"
 )
 

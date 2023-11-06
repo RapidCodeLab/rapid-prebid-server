@@ -21,7 +21,7 @@ func Sort(
 func Auction(
 	responses []openrtb2.BidResponse,
 	placementCountMeta map[string]int64,
-) []interface{} {
+) []openrtb2.Bid {
 	auctionParticipants := make(
 		map[string][]interface{},
 	)
