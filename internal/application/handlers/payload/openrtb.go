@@ -18,8 +18,9 @@ func initBidRequest(
 	inventoryType interfaces.InventoryType,
 	inventoryIABCategories []string,
 	inventoryIABCategoriesTaxonomy adcom1.CategoryTaxonomy,
-	bidRequest *openrtb2.BidRequest,
-) {
+) openrtb2.BidRequest {
+	bidRequest := openrtb2.BidRequest{}
+
 	bidRequest.ID = uuid.New().String()
 	bidRequest.Device = &openrtb2.Device{
 		UA:         deviceData.UserAgent,
@@ -49,6 +50,8 @@ func initBidRequest(
 			CatTax: inventoryIABCategoriesTaxonomy,
 		}
 	}
+
+	return bidRequest
 }
 
 func prepareImpObjects(

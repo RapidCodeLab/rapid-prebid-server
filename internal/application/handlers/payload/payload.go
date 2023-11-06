@@ -3,7 +3,6 @@ package payload_handler
 import (
 	"encoding/json"
 	"net"
-	"sync"
 
 	default_auction "github.com/RapidCodeLab/rapid-prebid-server/auctions/default"
 	"github.com/RapidCodeLab/rapid-prebid-server/internal/application/interfaces"
@@ -58,44 +57,19 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	bidRequest := openrtb2.BidRequest{}
-
-	initBidRequest(
+	bidRequest := initBidRequest(
 		deviceData,
 		geoData,
 		entities[0].InventoryID,
 		entities[0].InventoryType,
 		entities[0].IABCategories,
 		entities[0].IABCategoriesTaxonomy,
-		&bidRequest,
 	)
 
 	bidRequest.Imp = prepareImpObjects(entities)
 
-	responses := make([]openrtb2.BidResponse, 0, len(h.dspAdapters))
+	responses := h.doRequests(bidRequest)
 
-	// request DSPs
-	wg := sync.WaitGroup{}
-	wg.Add(len(h.dspAdapters))
-
-	for _, adapter := range h.dspAdapters {
-		a := adapter
-		go func() {
-			defer wg.Done()
-			bidResponse, err := a.DoRequest(bidRequest)
-			if err != nil {
-				h.logger.Errorf(
-					"adapter %s request: %s",
-					a.GetName(),
-					err.Error(),
-				)
-				return
-			}
-			responses = append(responses, bidResponse)
-		}()
-	}
-
-	wg.Wait()
 	if len(responses) < 1 {
 		ctx.SetStatusCode(fasthttp.StatusNoContent)
 		return
@@ -115,17 +89,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	res := payloadResponse{}
-
-	for _, winner := range winners {
-		p := payload{
-			EntityID:   winner.(openrtb2.Bid).ImpID,
-			Adm:        winner.(openrtb2.Bid).AdM,
-			MarkupType: winner.(openrtb2.Bid).MType,
-		}
-		res.Paylads = append(res.Paylads, p)
-	}
-
+	res := buildResponse(winners)
 	data, err := json.Marshal(res)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
