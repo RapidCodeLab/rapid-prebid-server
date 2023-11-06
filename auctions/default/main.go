@@ -38,7 +38,7 @@ func Auction(
 	}
 
 	winners := make(
-		[]interface{},
+		[]openrtb2.Bid,
 		0,
 		len(auctionParticipants),
 	)
@@ -48,7 +48,9 @@ func Auction(
 			impParticipants,
 			placementCountMeta[entityID],
 		)
-		winners = append(winners, impWinners...)
+		for _, w := range impWinners {
+			winners = append(winners, w.(openrtb2.Bid))
+		}
 	}
 
 	return winners
