@@ -15,6 +15,9 @@ func Sort(
 	plcmntCount int64,
 ) []interface{} {
 	timsort.Sort(participants, ByPrice)
+	if len(participants) < int(plcmntCount) {
+		plcmntCount = int64(len(participants) - 1)
+	}
 	return participants[0:plcmntCount]
 }
 
