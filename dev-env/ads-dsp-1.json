@@ -2,78 +2,78 @@
     "name":"creatives.com",
     "natives":[
         {
-            "title":"Wordpress Hosting",
+            "title":"[DSP-1] Wordpress Hosting",
             "text":"Cheap wordpress hosting at turhost.com",
             "image":"https://banners.rapidcodelab.repl.co/banners/1.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
-            "title":"Electronic Parts Store",
+            "title":"[DSP-1] Electronic Parts Store",
             "text":"USA Electronic component distributer",
             "image":"https://banners.rapidcodelab.repl.co/banners/2.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
-            "title":"Get Free BTC",
+            "title":"[DSP-1] Get Free BTC",
             "text":"BitShark.io - get free bitcoins every hour",
             "image":"https://banners.rapidcodelab.repl.co/banners/3.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
-            "title":"Domain Hosting Indonesia",
+            "title":"[DSP-1] Domain Hosting Indonesia",
             "text":"IDwebhost.com - hosting mulai 1.000/bln",
             "image":"https://banners.rapidcodelab.repl.co/banners/4.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
-            "title":"Wiggins Hair",
+            "title":"[DSP-1] Wiggins Hair",
             "text":"Up to 51% off - shop now",
             "image":"https://banners.rapidcodelab.repl.co/banners/5.gif",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         }
     ],
     "banners":[
         {
             "image":"https://banners.rapidcodelab.repl.co/banners/1.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "image":"https://banners.rapidcodelab.repl.co/banners/2.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "image":"https://banners.rapidcodelab.repl.co/banners/3.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "image":"https://banners.rapidcodelab.repl.co/banners/4.jpg",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "image":"https://banners.rapidcodelab.repl.co/banners/5.gif",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         }
     ],
     "videos":[
         {
             "uri":"https://banners.rapidcodelab.repl.co/media/001.mp4",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "uri":"https://banners.rapidcodelab.repl.co/media/002.mp4",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "uri":"https://banners.rapidcodelab.repl.co/media/003.mp4",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "uri":"https://banners.rapidcodelab.repl.co/media/004.mp4",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         },
         {
             "uri":"https://banners.rapidcodelab.repl.co/media/005.mp4",
-            "link":"https://yandex.ru"
+            "link":"https://yandex.ru?dsp=dsp-1"
         }
     ],
     "audios":[

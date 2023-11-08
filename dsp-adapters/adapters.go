@@ -6,11 +6,13 @@ import (
 )
 
 const (
-	DefaultAdapter = "demo-dsp-1"
+	DemoDSPAdapter1 = "demo-dsp-1"
+	DemoDSPAdapter2 = "demo-dsp-2"
 )
 
 func AdaptersInitializers() map[interfaces.DSPName]interfaces.NewDSPAdapter {
 	return map[interfaces.DSPName]interfaces.NewDSPAdapter{
-		DefaultAdapter: default_dsp_adapter.NewDSPAdpater,
+		DemoDSPAdapter1: default_dsp_adapter.NewDSPAdpater,
+		DemoDSPAdapter2: default_dsp_adapter.NewDSPAdpater,
 	}
 }
