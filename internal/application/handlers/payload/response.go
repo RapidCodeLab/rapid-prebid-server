@@ -53,6 +53,8 @@ func buildNativeMarkup(
 		return markup, err
 	}
 
+	markup = strings.ReplaceAll(markup, "{{LINK}}", nativeObj.Link.URL)
+
 	for _, asset := range nativeObj.Assets {
 		switch true {
 		case asset.Title != nil:
@@ -61,8 +63,6 @@ func buildNativeMarkup(
 			markup = strings.ReplaceAll(markup, "{{IMG}}", asset.Img.URL)
 		case asset.Data != nil:
 			markup = strings.ReplaceAll(markup, "{{DESC}}", asset.Data.Value)
-		case asset.Link != nil:
-			markup = strings.ReplaceAll(markup, "{{LINK}}", asset.Link.URL)
 		}
 	}
 	return markup, nil
