@@ -10,6 +10,7 @@ import (
 
 func (h *Handler) buildResponse(
 	bids []openrtb2.Bid,
+	templates map[string]string,
 ) payloadResponse {
 	res := payloadResponse{}
 
@@ -21,7 +22,10 @@ func (h *Handler) buildResponse(
 
 		switch bid.MType {
 		case openrtb2.MarkupNative:
-			adMarkup, err = buildNativeMarkup(bid.AdM)
+			adMarkup, err = buildNativeMarkup(
+				bid.AdM,
+				templates[bid.ImpID],
+			)
 			if err != nil {
 			}
 		default:
@@ -40,39 +44,32 @@ func (h *Handler) buildResponse(
 
 func buildNativeMarkup(
 	data string,
+	template string,
 ) (string, error) {
 	var (
 		markup    string
 		nativeObj response.Response
 	)
 
-	markup = nativeAdMarkupTemplate
+	markup = template
 
 	err := json.Unmarshal([]byte(data), &nativeObj)
 	if err != nil {
 		return markup, err
 	}
 
+	markup = strings.ReplaceAll(markup, "##LINK##", nativeObj.Link.URL)
+
 	for _, asset := range nativeObj.Assets {
 		switch true {
 		case asset.Title != nil:
-			markup = strings.ReplaceAll(markup, "{{TITLE}}", asset.Title.Text)
+			markup = strings.ReplaceAll(markup, "##TITLE##", asset.Title.Text)
 		case asset.Img != nil:
-			markup = strings.ReplaceAll(markup, "{{IMG}}", asset.Img.URL)
+			markup = strings.ReplaceAll(markup, "##IMG##", asset.Img.URL)
 		case asset.Data != nil:
-			markup = strings.ReplaceAll(markup, "{{DESC}}", asset.Data.Value)
-		case asset.Link != nil:
-			markup = strings.ReplaceAll(markup, "{{LINK}}", asset.Link.URL)
+			markup = strings.ReplaceAll(markup, "##DESC##", asset.Data.Value)
 		}
 	}
 	return markup, nil
 }
 
-var nativeAdMarkupTemplate = `<div>
-<a href="{{LINK}}" target="_blank">
-<img src="{{IMG}}/>
-<br>
-<b>{{TITLE}}</b>
-<p>{{DESC}}</p>
-</a>
-</div>`

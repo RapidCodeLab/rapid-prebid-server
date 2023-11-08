@@ -75,8 +75,11 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	}
 
 	placementCountMeta := make(map[string]int64)
+	entityTemplates := make(map[string]string)
+
 	for _, e := range entities {
 		placementCountMeta[e.ID] = e.PlacementCount
+		entityTemplates[e.ID] = e.Template
 	}
 
 	winners := default_auction.Auction(
@@ -88,7 +91,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	res := h.buildResponse(winners)
+	res := h.buildResponse(winners, entityTemplates)
 	data, err := json.Marshal(res)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
