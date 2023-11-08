@@ -54,6 +54,7 @@ type (
 		Width                           int64                   `json:"width"`           // will be use as wmin for Native
 		Height                          int64                   `json:"height"`          // will be use as hmin for Native
 		TitleLength                     int64                   `json:"title_height"`
+		Template                        string                  `json:"template"`
 	}
 
 	Inventory struct {
