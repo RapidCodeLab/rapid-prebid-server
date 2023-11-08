@@ -88,7 +88,7 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	res := buildResponse(winners)
+	res := h.buildResponse(winners)
 	data, err := json.Marshal(res)
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
