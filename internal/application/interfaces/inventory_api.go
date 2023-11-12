@@ -53,7 +53,7 @@ type (
 		PlacementCount                  int64                   `json:"placement_count"` // for Native
 		Width                           int64                   `json:"width"`           // will be use as wmin for Native
 		Height                          int64                   `json:"height"`          // will be use as hmin for Native
-		TitleLength                     int64                   `json:"title_height"`
+		TitleLength                     int64                   `json:"title_length"`
 		Template                        string                  `json:"template"`
 	}
 

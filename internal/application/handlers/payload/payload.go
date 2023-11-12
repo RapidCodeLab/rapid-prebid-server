@@ -97,7 +97,6 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 		ctx.SetStatusCode(fasthttp.StatusBadGateway)
 		return
 	}
-
 	ctx.SetContentType(contentTypeApplicationJson)
 	ctx.SetBody(data)
 }

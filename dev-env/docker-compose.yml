@@ -2,7 +2,7 @@ version: '3'
 services:
   demo-dsp-1:
     container_name: demo-dsp-1
-    image: rapidcodelab/fakedsp:0.0.12
+    image: rapidcodelab/fakedsp:0.0.13
     logging:
       options:
         max-size: "50k"
@@ -16,7 +16,7 @@ services:
       ADS_DATABASE_PATH: /ads.json
   demo-dsp-2:
     container_name: demo-dsp-2
-    image: rapidcodelab/fakedsp:0.0.12
+    image: rapidcodelab/fakedsp:0.0.13
     logging:
       options:
         max-size: "50k"
