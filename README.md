@@ -1,6 +1,6 @@
 # Server-Side (S2S) Header Bidding Solution
 
-[![Build Status](https://scrutinizer-ci.com/g/RapidCodeLab/rapid-prebid-server/badges/build.png?b=main)](https://scrutinizer-ci.com/g/RapidCodeLab/rapid-prebid-server/build-status/main?style=flat-square)
+[![Build Status](https://scrutinizer-ci.com/g/RapidCodeLab/rapid-prebid-server/badges/build.png?b=main&style=flat-square)](https://scrutinizer-ci.com/g/RapidCodeLab/rapid-prebid-server/build-status/main)
 [![GitHub license](https://img.shields.io/github/license/RapidCodeLab/rapid-prebid-server?style=flat-square)](https://github.com/RapidCodeLab/rapid-prebid-server/blob/main/LICENSE)
 ![GitHub top language](https://img.shields.io/github/languages/top/RapidCodeLab/rapid-prebid-server?style=flat-square)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/RapidCodeLab/rapid-prebid-server?style=flat-square)
