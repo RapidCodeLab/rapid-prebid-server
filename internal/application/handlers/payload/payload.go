@@ -66,7 +66,6 @@ func (h *Handler) Handle(ctx *fasthttp.RequestCtx) {
 	)
 
 	bidRequest.Imp = prepareImpObjects(entities)
-
 	responses := h.doRequests(bidRequest)
 
 	if len(responses) < 1 {
