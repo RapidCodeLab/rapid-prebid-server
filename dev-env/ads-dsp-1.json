@@ -34,24 +34,142 @@
     ],
     "banners":[
         {
-            "image":"https://banners.rapidcodelab.repl.co/banners/1.jpg",
-            "link":"https://yandex.ru?dsp=dsp-1"
+            "image":"https://demo.rtblab.online/banners/728x90/01.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
         },
         {
-            "image":"https://banners.rapidcodelab.repl.co/banners/2.jpg",
-            "link":"https://yandex.ru?dsp=dsp-1"
+            "image":"https://demo.rtblab.online/banners/728x90/02.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
         },
         {
-            "image":"https://banners.rapidcodelab.repl.co/banners/3.jpg",
-            "link":"https://yandex.ru?dsp=dsp-1"
+            "image":"https://demo.rtblab.online/banners/728x90/03.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
         },
         {
-            "image":"https://banners.rapidcodelab.repl.co/banners/4.jpg",
-            "link":"https://yandex.ru?dsp=dsp-1"
+            "image":"https://demo.rtblab.online/banners/728x90/04.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
         },
         {
-            "image":"https://banners.rapidcodelab.repl.co/banners/5.gif",
-            "link":"https://yandex.ru?dsp=dsp-1"
+            "image":"https://demo.rtblab.online/banners/728x90/05.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/728x90/06.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/728x90/07.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/728x90/08.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/728x90/09.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/728x90/10.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":728,
+            "height":90
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/01.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/02.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/03.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/04.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/05.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/06.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/07.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/08.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/09.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x250/10.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":250
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x600/01.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":600
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x600/02.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":600
+        },
+        {
+            "image":"https://demo.rtblab.online/banners/300x600/03.gif",
+            "link":"https://yandex.ru?dsp=dsp-1",
+            "width":300,
+            "height":600
         }
     ],
     "videos":[

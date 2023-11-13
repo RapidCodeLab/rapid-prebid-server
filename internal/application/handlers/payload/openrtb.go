@@ -60,18 +60,19 @@ func prepareImpObjects(
 	imps := []openrtb2.Imp{}
 
 	for _, entity := range entities {
+		e := entity
 		imp := openrtb2.Imp{
 			ID: entity.ID,
 		}
 		switch entity.Type {
 		case interfaces.EntityTypeBanner:
 			imp.Banner = &openrtb2.Banner{
-				W: &entity.Width,
-				H: &entity.Height,
+				W: &e.Width,
+				H: &e.Height,
 			}
 		case interfaces.EntityTypeNative:
 			nativeRequest, err := prepareNativeObject(
-				entity,
+				e,
 			)
 			if err != nil {
 				continue
