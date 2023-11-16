@@ -8,7 +8,7 @@
 [![Discord](https://img.shields.io/discord/1173283185354887228?logo=discord&logoColor=white&label=discord&style=flat-square)](https://discord.gg/nKdsZZGV)
 
 ## What is RapidPrebidServer ?
-RapidPrebidServer is a freely distributed software that allows publishers to conduct automated auctions using server-side (s2s, server-to-server) header bidding technology. 
+RapidPrebidServer is a open-source software that allows publishers to conduct automated auctions using server-side (s2s, server-to-server) header bidding technology. 
 
 With RapidPrebidServer, publishers can give different DSPs access to their inventory and receive bids from multiple advertisers at once. In such an auction, all DSPs have equal access to bid. 
 
