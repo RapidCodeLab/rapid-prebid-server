@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Extract Version
         id: version_step
