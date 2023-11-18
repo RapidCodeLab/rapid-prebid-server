@@ -1,5 +1,7 @@
 # Server-Side (S2S) Header Bidding Solution
 ### We building better RTB ;)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/rapidcodelab/rapid-prebid-server?style=flat-square)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/rapidcodelab/rapid-prebid-server/latest?style=flat-square)
 ![Scrutinizer build (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/build/g/RapidCodeLab/rapid-prebid-server/main?style=flat-square)
 [![GitHub license](https://img.shields.io/github/license/RapidCodeLab/rapid-prebid-server?style=flat-square)](https://github.com/RapidCodeLab/rapid-prebid-server/blob/main/LICENSE)
 ![GitHub top language](https://img.shields.io/github/languages/top/RapidCodeLab/rapid-prebid-server?style=flat-square)
