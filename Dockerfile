@@ -13,7 +13,7 @@ FROM scratch
 COPY --from=build /etc/ssl/certs/ca-certificates.crt \
      /etc/ssl/certs/ca-certificates.crt
 
-COPY --from=build /go/src/github.com/RapidCodeLab/rapid-prebid-server/server 
+COPY --from=build /go/src/github.com/RapidCodeLab/rapid-prebid-server/server \ 
     /server
 
 ENTRYPOINT ["/server"]
