@@ -18,4 +18,4 @@ RapidPrebidServer integrates with external DSPs using OpenRTB 2.6 and Dynamic Na
 
 ## Demo page
 
-![Demo Page](https://demo.rtblab.online/)
+The ad spaces are served by the RapidPrebidServer on [this Demo Page](https://demo.rtblab.online/)
